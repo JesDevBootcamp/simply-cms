@@ -1,38 +1,39 @@
 // Login Page: Simple page with a login form and welcome header.
 
+import { Navigate } from "react-router-dom";
+
 import Welcome from "../components/Welcome";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
+import NavList from "../components/NavList";
 
 export default function LoginPage() {
-	function signUpHandler() {
-		return null;
+	const siteTitle = "Welcome!";
+
+	if (!siteTitle) {
+		return <Navigate to="/admin/sign-up" />;
 	}
 
 	function loginHandler() {
-		return null;
+		alert("LOGGED IN!");
+		return <Navigate to="/admin/editor" />;
 	}
 
-	return <>
-		<Welcome
-			title="Welcome!"
-			subtitle="Login or Sign-up:"
-		/>
-		<form>
-			<fieldset>
-				<TextField
-					label="Enter User Email:"
-					type="email"
-				/>
-				<TextField
-					label="Enter Password:"
-					type="password"
-				/>
-			</fieldset>
-			<fieldset>
-				<Button action={signUpHandler}>Sign-up</Button>
-				<Button action={loginHandler}>Login</Button>
-			</fieldset>
-		</form>
-	</>;
+	return (
+		<main className="login-page">
+			<Welcome title={siteTitle} subtitle="Login or Sign-up:" />
+			<form className="login-page-form">
+				<fieldset>
+					<TextField label="Enter Username:" type="text" />
+					<TextField label="Enter Password:" type="password" />
+				</fieldset>
+				<fieldset>
+					<Button action={loginHandler}>Login</Button>
+				</fieldset>
+			</form>
+			<NavList links={{
+				"Sign-up": "/admin/sign-up/"
+			}}></NavList>
+		</main>
+	);
 }
