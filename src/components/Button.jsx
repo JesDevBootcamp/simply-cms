@@ -4,7 +4,7 @@ export default function Button({ action, children }) {
 	return (
 		<span
 			role="button"
-			className="Button"
+			className="button"
 			onClick={action}>
 			{children}
 		</span>
