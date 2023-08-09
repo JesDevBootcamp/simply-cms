@@ -2,12 +2,13 @@
 
 export default function Welcome({ title, subtitle }) {
 	return (
-		<header className="Welcome">
-			<h1 className="Welcome-title">
+		<header className="welcome">
+			<h1 className="welcome-title">
 				{title}
 			</h1>
-			{subtitle &&
-				<h2 className="Welcome-subtitle">
+			{
+				subtitle &&
+				<h2 className="welcome-subtitle">
 					{subtitle}
 				</h2>
 			}
