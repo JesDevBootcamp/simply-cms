@@ -5,18 +5,18 @@ import { Navigate } from "react-router-dom";
 import Welcome from "../components/Welcome";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
-import NavList from "../components/NavList";
 
 export default function LoginPage() {
 	const siteTitle = "Welcome!";
 
 	if (!siteTitle) {
-		return <Navigate to="/admin/sign-up" />;
+		alert("NO DATABASE!");
+		return <Navigate to="/setup" />;
 	}
 
 	function loginHandler() {
 		alert("LOGGED IN!");
-		return <Navigate to="/admin/editor" />;
+		return <Navigate to="/editor" />;
 	}
 
 	return (
@@ -31,9 +31,6 @@ export default function LoginPage() {
 					<Button action={loginHandler}>Login</Button>
 				</fieldset>
 			</form>
-			<NavList links={{
-				"Sign-up": "/admin/sign-up/"
-			}}></NavList>
 		</main>
 	);
 }
