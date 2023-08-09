@@ -21,7 +21,7 @@ export default function LoginPage() {
 
 	return (
 		<main className="login-page">
-			<Welcome title={siteTitle} subtitle="Login or Sign-up:" />
+			<Welcome title={siteTitle} />
 			<form className="login-page-form">
 				<fieldset>
 					<TextField label="Enter Username:" type="text" />
