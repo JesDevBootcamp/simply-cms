@@ -10,10 +10,12 @@ import WebPage from "./pages/WebPage";
 export default function App() {
 	return (
 		<Routes>
-			<Route path="/setup" element={<SetupPage />} />
-			<Route path="/login" element={<LoginPage />} />
-			<Route path="/editor" element={<EditorPage />} />
-			<Route element={<WebPage />} path="*" />
+			<Route path="/editor">
+				<Route index element={<EditorPage />} />
+				<Route path="login" element={<LoginPage />} />
+				<Route path="setup" element={<SetupPage />} />
+			</Route>
+			<Route path="*" element={<WebPage />} />
 		</Routes>
 	);
 }

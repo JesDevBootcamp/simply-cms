@@ -11,7 +11,7 @@ export default function LoginPage() {
 
 	if (!siteTitle) {
 		alert("NO DATABASE!");
-		return <Navigate to="/setup" />;
+		return <Navigate to="/editor/setup" />;
 	}
 
 	function loginHandler() {
