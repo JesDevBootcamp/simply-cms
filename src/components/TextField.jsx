@@ -7,14 +7,14 @@ export default function TextField({ label, type = "text", placeholder = "" }) {
 	const inputId = useId();
 
 	return (
-		<div className="TextField">
+		<div className="text-field">
 			<label
-				className="TextField-label"
+				className="text-field-label"
 				htmlFor={inputId}>
 				{label}
 			</label>
 			<input
-				className="TextField-input"
+				className="text-field-input"
 				id={inputId}
 				type={type}
 				placeholder={placeholder}
