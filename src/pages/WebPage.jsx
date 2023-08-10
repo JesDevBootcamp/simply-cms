@@ -1,5 +1,18 @@
-// Web Page: Baseline layout for any user-created page.
+// Web Page: Markdown based layout for any user-created page.
 
-export default function WebPage() {
-	return <></>;
+import DOMPurify from "dompurify";
+import { marked } from "marked";
+import { Helmet } from "react-helmet";
+
+import "../styles/web-page.scss";
+
+export default function WebPage({ title = "Untitled", markdown }) {
+	return <>
+		<Helmet>
+			<title>{title}</title>
+		</Helmet>
+		<div className="web-page">
+			{DOMPurify.sanitize(marked.parse(markdown))}
+		</div>
+	</>;
 }
