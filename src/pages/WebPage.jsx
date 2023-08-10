@@ -2,19 +2,22 @@
 
 import DOMPurify from "dompurify";
 import { marked } from "marked";
-import { Helmet } from "react-helmet";
+import { useEffect } from "react";
 
 import "../styles/web-page.scss";
 
 export default function WebPage({ title = "Untitled", markdown }) {
-	return <>
-		<Helmet>
-			<title>{title}</title>
-		</Helmet>
+	// Update the webpage title:
+	useEffect(() => {
+		document.title = title;
+	}, [title]);
+
+	// Return sanitized Markdown output:
+	return (
 		<div className="web-page"
 			dangerouslySetInnerHTML={{
 				__html: DOMPurify.sanitize(marked.parse(markdown))
 			}}
 		/>
-	</>;
+	);
 }
