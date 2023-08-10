@@ -2,9 +2,9 @@
 
 import { Route, Routes } from "react-router-dom";
 
-import SetupPage from "./pages/SetupPage";
-import LoginPage from "./pages/LoginPage";
 import EditorPage from "./pages/EditorPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 import WebPage from "./pages/WebPage";
 
 import "./styles/app.scss";
@@ -15,7 +15,7 @@ export default function App() {
 			<Route path="/editor">
 				<Route index element={<EditorPage />} />
 				<Route path="login" element={<LoginPage />} />
-				<Route path="setup" element={<SetupPage />} />
+				<Route path="sign-up" element={<SignUpPage />} />
 			</Route>
 			<Route path="*" element={<WebPage />} />
 		</Routes>

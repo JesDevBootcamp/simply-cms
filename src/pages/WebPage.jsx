@@ -1,4 +1,4 @@
-// Web Page: Markdown based layout for any user-created page.
+// Web Page: Markdown generated page for any user-created content.
 
 import DOMPurify from "dompurify";
 import { marked } from "marked";
