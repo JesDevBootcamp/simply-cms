@@ -7,6 +7,8 @@ import LoginPage from "./pages/LoginPage";
 import EditorPage from "./pages/EditorPage";
 import WebPage from "./pages/WebPage";
 
+import "./styles/app.scss";
+
 export default function App() {
 	return (
 		<Routes>
