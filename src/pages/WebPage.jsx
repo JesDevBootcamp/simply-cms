@@ -11,8 +11,10 @@ export default function WebPage({ title = "Untitled", markdown }) {
 		<Helmet>
 			<title>{title}</title>
 		</Helmet>
-		<div className="web-page">
-			{DOMPurify.sanitize(marked.parse(markdown))}
-		</div>
+		<div className="web-page"
+			dangerouslySetInnerHTML={{
+				__html: DOMPurify.sanitize(marked.parse(markdown))
+			}}
+		/>
 	</>;
 }
