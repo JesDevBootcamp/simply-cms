@@ -29,6 +29,7 @@ export default function TextField(props) {
 				value={value}
 				onChange={handleChange}
 				required={required}
+				maxLength={50}
 			/>
 		</div>
 	);
