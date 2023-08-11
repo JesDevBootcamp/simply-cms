@@ -14,13 +14,13 @@ export default function WebPage({ id }) {
 	// Update page title and content on page ID change:
 	useEffect(async () => {
 		// Get the title and markdown content for page:
-		const { title, markdown } = await axios.get(`/api/pages/${id}`);
+		const { title, content } = await axios.get(`/api/pages/${id}`);
 
 		// Update the webpage title:
 		document.title = title;
 
 		// Set the Markdown state:
-		setMarkdown(markdown);
+		setMarkdown(content);
 	}, [id]);
 
 	// Return sanitized Markdown output:
