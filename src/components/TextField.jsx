@@ -2,7 +2,10 @@
 
 import { useId } from "react";
 
-export default function TextField({ label, placeholder, type = "text", value, onChange }) {
+export default function TextField(props) {
+	// Destructure props:
+	const { type = "text", label, value, placeholder, onChange, required } = props;
+
 	// Create a unique ID for the input field:
 	const inputId = useId();
 
@@ -25,6 +28,7 @@ export default function TextField({ label, placeholder, type = "text", value, on
 				placeholder={placeholder}
 				value={value}
 				onChange={handleChange}
+				required={required}
 			/>
 		</div>
 	);
