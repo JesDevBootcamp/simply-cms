@@ -12,15 +12,22 @@ export default function WebPage({ id }) {
 	const [markdown, setMarkdown] = useState("");
 
 	// Update page title and content on page ID change:
-	useEffect(async () => {
-		// Get the title and markdown content for page:
-		const { title, content } = await axios.get(`/api/pages/${id}`);
+	useEffect(() => {
+		(async() => {
+			// Get the title and markdown content for page:
+			try {
+				const { title, content } = await axios.get(`/api/pages/${id}`);
 
-		// Update the webpage title:
-		document.title = title;
+				// Update the webpage title:
+				document.title = title;
 
-		// Set the Markdown state:
-		setMarkdown(content);
+				// Set the Markdown state:
+				setMarkdown(content);
+			}
+			catch(error) {
+				console.error("The following error occurred:", error);
+			}
+		})();
 	}, [id]);
 
 	// Return sanitized Markdown output:
