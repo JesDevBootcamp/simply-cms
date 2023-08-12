@@ -1,12 +1,12 @@
 // Button: Clickable component that triggers an action.
 
-export default function Button({ action, children }) {
+export default function Button({ action, type, children }) {
 	return (
-		<span
-			role="button"
+		<button
 			className="button"
+			type={type}
 			onClick={action}>
 			{children}
-		</span>
+		</button>
 	);
 }
