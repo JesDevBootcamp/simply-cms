@@ -37,10 +37,6 @@ Page.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true
-		},
-		owner: {
-			type: DataTypes.INTEGER,
-			allowNull: false
 		}
 	},
 	{
