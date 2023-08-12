@@ -4,7 +4,7 @@ import express from "express";
 import ViteExpress from "vite-express";
 // import bcrypt from "bcrypt";
 
-import users from "./data/users.js";
+import { Page } from "./sequelize/models.js";
 
 // Setup Express instance:
 const app = express();
@@ -24,6 +24,27 @@ ViteExpress.config({ printViteDevServerHost: true });
 app.get("/api/users/", async (req, res) => {
 	// Send out test user data:
 	res.json(users);
+});
+
+// Route to get page with certain URI slug:
+app.get("/api/pages/:slug", async (req, res) => {
+	// Get decoded slug within parameters:
+	const slug = decodeURIComponent(req.params.slug);
+
+	// Get first page data where slug:
+	const page = await Page.findOne({
+		where: { slug: slug }
+	});
+
+	// Send either page or 404 status:
+	if (page === null) {
+		// Send 404 "Not Found" status:
+		res.sendStatus(404);
+	}
+	else {
+		// Send page JSON data:
+		res.json(page);
+	}
 });
 
 // Route to validate user login:
