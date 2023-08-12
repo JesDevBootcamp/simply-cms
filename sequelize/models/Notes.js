@@ -1,4 +1,4 @@
-// Pages: Creates the Pages table using Sequelize.
+// Notes: Creates the Notes table using Sequelize.
 
 import { DataTypes, Model } from "sequelize";
 import util from "util";
@@ -7,15 +7,15 @@ import connect from "../connect.js";
 // Establish connection to database:
 const sequelize = await connect();
 
-// Create Page table using Sequelize Model:
-export class Page extends Model {
+// Create Note table using Sequelize Model:
+export class Note extends Model {
 	[util.inspect.custom]() {
 		return this.toJSON();
 	}
 }
 
-// Initilize Page Model structure:
-Page.init(
+// Initilize Note Model structure:
+Note.init(
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -24,7 +24,7 @@ Page.init(
 			primaryKey: true
 		},
 		title: {
-			type: DataTypes.STRING(40),
+			type: DataTypes.STRING(60),
 			allowNull: false,
 			defaultValue: "Untitled"
 		},
@@ -33,20 +33,19 @@ Page.init(
 			allowNull: false,
 			defaultValue: ""
 		},
-		slug: {
-			type: DataTypes.STRING,
-			allowNull: false,
-			unique: true
+		owner: {
+			type: DataTypes.INTEGER,
+			allowNull: false
 		}
 	},
 	{
 		sequelize: sequelize,
-		modelName: "Page"
+		modelName: "Note"
 	}
 );
 
-// Synchronize Page Model:
-await Page.sync();
+// Synchronize Note Model:
+await Note.sync();
 
 // Export Sequelize Database:
 export default sequelize;

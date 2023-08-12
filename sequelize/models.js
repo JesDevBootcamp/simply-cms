@@ -1,7 +1,11 @@
 // Models: Export Sequelize Models, establish any relationships.
 
 import { User } from "./models/Users.js";
-import { Page } from "./models/Pages.js";
+import { Note } from "./models/Notes.js";
+
+// Create a One-To-Many relationship with User/Note Models:
+User.hasMany(Note, { foreignKey: { name: "id", field: "id" } });
+Note.belongsTo(User, { foreignKey: { name: "id", field: "id" } });
 
 // Export all Models:
-export { User, Page };
+export { User, Note };
