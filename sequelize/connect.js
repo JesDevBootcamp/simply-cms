@@ -2,7 +2,7 @@
 
 import Sequelize from "sequelize";
 
-export default async function connect(URI = "postgres:///simplycms") {
+export default async function connect(URI = "postgres:///notesapp") {
 	// Initial log that we are connecting to database:
 	console.log(`Connecting to database: ${URI}`);
 
