@@ -12,12 +12,12 @@ import "./styles/app.scss";
 export default function App() {
 	return (
 		<Routes>
-			<Route path="/editor">
+			<Route path="editor">
 				<Route index element={<EditorPage />} />
 				<Route path="login" element={<LoginPage />} />
 				<Route path="sign-up" element={<SignUpPage />} />
 			</Route>
-			<Route path="*" element={<WebPage />} />
+			<Route path=":slug" element={<WebPage />} />
 		</Routes>
 	);
 }
