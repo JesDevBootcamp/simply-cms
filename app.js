@@ -128,28 +128,28 @@ app.all("/api/notes/*", (req, res, next) => {
 	}
 });
 
-// Route to get note with certain ID:
-app.get("/api/notes/:id", async (req, res) => {
-	// Get ID within parameters:
-	const { id } = req.params;
-
-	// Get first note with ID:
-	const note = await Note.findOne({
-		where: { id }
-	});
-
-	// Send note JSON data:
-	res.json(note);
-});
-
-// Route to get note with certain owner:
-app.get("/api/notes/user/:owner", async (req, res) => {
+// Route to get notes with certain owner:
+app.get("/api/notes/:owner", async (req, res) => {
 	// Get owner ID within parameters:
 	const { owner } = req.params;
 
 	// Get all notes from owner:
 	const note = await Note.findAll({
 		where: { owner }
+	});
+
+	// Send note JSON data:
+	res.json(note);
+});
+
+// Route to get owner note with certain ID:
+app.get("/api/notes/:owner/:id", async (req, res) => {
+	// Get ID within parameters:
+	const { owner, id } = req.params;
+
+	// Get first owner note with ID:
+	const note = await Note.findOne({
+		where: { owner, id }
 	});
 
 	// Send note JSON data:
