@@ -1,10 +1,11 @@
 // App: Express backend for our application.
 
 import express from "express";
+import session from "express-session";
 import ViteExpress from "vite-express";
-// import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 
-import { Page } from "./sequelize/models.js";
+import { Note, User } from "./sequelize/models.js";
 
 // Setup Express instance:
 const app = express();
@@ -16,46 +17,126 @@ const port = 8080;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
 app.use(express.json());
+app.use(session({
+	secret: "super-secret-notes-app",
+	saveUninitialized: false,
+	resave: false,
+	cookie: {
+		sameSite: true,
+		maxAge: 60 * (60 * 1000)
+	}
+}));
 
 // Configure Vite Express:
 ViteExpress.config({ printViteDevServerHost: true });
 
-// Route to get all users:
-app.get("/api/users/", async (req, res) => {
-	// Send out test user data:
-	res.json(users);
-});
+// Route to get given user data:
+app.get("/api/login/:id", async (req, res) => {
+	// Get ID within parameters:
+	const { id } = req.params;
 
-// Route to get page with certain URI slug:
-app.get("/api/pages/:slug", async (req, res) => {
-	// Get decoded slug within parameters:
-	const slug = decodeURIComponent(req.params.slug);
-
-	// Get first page data where slug:
-	const page = await Page.findOne({
-		where: { slug: slug }
+	// Get the user with given ID:
+	const user = await User.findOne({
+		where: { id }
 	});
 
-	// Send either page or 404 status:
-	if (page === null) {
-		// Send 404 "Not Found" status:
-		res.sendStatus(404);
+	// Respond with user data:
+	res.json(user);
+});
+
+// Route to store user login information:
+app.put("/api/login/", async (req, res) => {
+	// Get email and password from request body:
+	const { email, password } = req.body;
+	
+	// Create password hash:
+	const hash = bcrypt.hashSync(password, 10);
+
+	try {
+		// Create a new User table row:
+		await User.create({ email, password: hash });
+
+		// Respond with success message:
+		res.send("Sign-up and login store successful.");
 	}
-	else {
-		// Send page JSON data:
-		res.json(page);
+	catch (error) {
+		// Respond with error message:
+		res.send("Something went wrong: " + error);
 	}
 });
 
 // Route to validate user login:
 app.post("/api/login/", async (req, res) => {
-	const { username, password } = req.body;
+	// Get email and password from request body:
+	const { email, password } = req.body;
 
-	console.log(username, password);
+	// Get the user with given email:
+	const user = await User.findOne({
+		where: { email }
+	});
 
-	// const passwordMatch = await bcrypt.compare(password, user.password);
+	// Validate login password hashes:
+	let login = false;
+	if (user !== null) {
+		login = await bcrypt.compare(password, user.password);
+	}
 
-	res.send(true);
+	// Respond with and store login boolean:
+	req.session.login = login;
+	res.send(login);
+});
+
+// Route to delete a user login and their notes:
+app.delete("/api/login/:id", async (req, res) => {
+	// Get ID within parameters:
+	const { id } = req.params;
+
+	// Delete all notes to given user:
+	await Note.destroy({ where: { owner: id } });
+
+	// Delete User with given email:
+	await User.destroy({ where: { id } });
+
+	// Respond with success message:
+	res.send("Deleted user data and notes.");
+});
+
+// Route to get note with certain ID:
+app.get("/api/notes/:id", async (req, res) => {
+	// Get ID within parameters:
+	const { id } = req.params;
+
+	// Get first note with ID:
+	const note = await Note.findOne({
+		where: { id }
+	});
+
+	// Send note JSON data:
+	res.json(note);
+});
+
+// Route to store note data:
+app.put("/api/notes/", async (req, res) => {
+	// Get title, content and owner from request body:
+	const { title, content, owner } = req.body;
+
+	// Create a new Note table row:
+	await Note.create({ title, content, owner });
+
+	// Respond with success message:
+	res.send("Note stored successfully.");
+})
+
+// Route to delete note data:
+app.delete("/api/notes/:id", async (req, res) => {
+	// Get ID within parameters:
+	const { id } = req.params;
+
+	// Delete note with ID:
+	await Note.destroy({ where: { id } });
+
+	// Respond with success message:
+	res.send("Deleted note successfully.");
 });
 
 // Setup Vite Express and listen to port:
