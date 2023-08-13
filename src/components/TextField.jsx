@@ -6,14 +6,20 @@ import "../styles/text-field.scss";
 
 export default function TextField(props) {
 	// Destructure props:
-	const { type = "text", maxLength = 50, label, value, placeholder, onChange, required } = props;
+	const {
+		type = "text",
+		placeholder = "",
+		maxLength = 50,
+		label = "Enter Information:",
+		value, onChange, required
+	} = props;
 
 	// Create a unique ID for the input field:
 	const inputId = useId();
 
 	// Update onChange callback with value:
 	function handleChange(event) {
-		onChange(event.target.value);
+		onChange(event.target.value.trim());
 	};
 
 	return (
@@ -27,8 +33,8 @@ export default function TextField(props) {
 				className="text-field-input"
 				id={inputId}
 				type={type}
-				placeholder={placeholder}
-				value={value}
+				placeholder={placeholder.trim()}
+				value={value.trim()}
 				onChange={handleChange}
 				required={required}
 				maxLength={maxLength}
