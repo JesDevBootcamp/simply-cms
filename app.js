@@ -116,6 +116,18 @@ app.delete("/api/login/:id", async (req, res) => {
 	}
 });
 
+// Route to verify user is logged in to access notes:
+app.all("/api/notes/*", (req, res, next) => {
+	// Only access note data if user signed in:
+	if (req.session.login === true) {
+		next();
+	}
+	else {
+		// Respond with error message:
+		res.send("User must be logged in to access note.");
+	}
+});
+
 // Route to get note with certain ID:
 app.get("/api/notes/:id", async (req, res) => {
 	// Get ID within parameters:
