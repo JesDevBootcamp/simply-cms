@@ -99,14 +99,21 @@ app.delete("/api/login/:id", async (req, res) => {
 	// Get ID within parameters:
 	const { id } = req.params;
 
-	// Delete all notes to given user:
-	await Note.destroy({ where: { owner: id } });
+	// Only delete user data if signed in:
+	if (req.session.login === true) {
+		// Delete all notes to given user:
+		await Note.destroy({ where: { owner: id } });
 
-	// Delete User with given email:
-	await User.destroy({ where: { id } });
+		// Delete User with given email:
+		await User.destroy({ where: { id } });
 
-	// Respond with success message:
-	res.send("Deleted user data and notes.");
+		// Respond with success message:
+		res.send("Deleted user data and notes.");
+	}
+	else {
+		// Respond with error message:
+		res.send("User must be logged in for deletion.");
+	}
 });
 
 // Route to get note with certain ID:
