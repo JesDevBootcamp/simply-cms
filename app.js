@@ -136,7 +136,7 @@ app.put("/api/notes/", async (req, res) => {
 		// Respond with error message:
 		res.send("Note was not created: " + error);
 	}
-})
+});
 
 // Route to delete note data:
 app.delete("/api/notes/:id", async (req, res) => {

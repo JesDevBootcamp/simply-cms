@@ -3,6 +3,7 @@
 import { DataTypes, Model } from "sequelize";
 import util from "util";
 import connect from "../connect.js";
+import bcrypt from "bcrypt";
 
 // Establish connection to database:
 const sequelize = await connect();
@@ -26,11 +27,22 @@ User.init(
 		email: {
 			type: DataTypes.STRING(50),
 			allowNull: false,
-			unique: true
+			unique: true,
+			validate: {
+				isEmail: true
+			}
 		},
 		password: {
 			type: DataTypes.STRING(72),
-			allowNull: false
+			allowNull: false,
+			validate: {
+				async notEmptyHash(value) {
+					const emptyPassword = await bcrypt.compare("", value);
+					if (emptyPassword) {
+						throw new Error("Password cannot be empty.");
+					}
+				}
+			}
 		}
 	},
 	{
