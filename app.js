@@ -89,6 +89,9 @@ app.post("/api/login/", async (req, res) => {
 		login = await bcrypt.compare(password, user.password);
 	}
 
+	// Store user ID in session:
+	req.session.user = user.id;
+
 	// Respond with and store login boolean:
 	req.session.login = login;
 	res.send(login);
@@ -128,28 +131,25 @@ app.all("/api/notes/*", (req, res, next) => {
 	}
 });
 
-// Route to get notes with certain owner:
-app.get("/api/notes/:owner", async (req, res) => {
-	// Get owner ID within parameters:
-	const { owner } = req.params;
-
+// Route to get notes from logged in owner:
+app.get("/api/notes/", async (req, res) => {
 	// Get all notes from owner:
 	const note = await Note.findAll({
-		where: { owner }
+		where: { owner: req.session.user }
 	});
 
 	// Send note JSON data:
 	res.json(note);
 });
 
-// Route to get owner note with certain ID:
-app.get("/api/notes/:owner/:id", async (req, res) => {
+// Route to get logged in owner note with ID:
+app.get("/api/notes/:id", async (req, res) => {
 	// Get ID within parameters:
-	const { owner, id } = req.params;
+	const { id } = req.params;
 
 	// Get first owner note with ID:
 	const note = await Note.findOne({
-		where: { owner, id }
+		where: { owner: req.session.user, id }
 	});
 
 	// Send note JSON data:
@@ -158,15 +158,15 @@ app.get("/api/notes/:owner/:id", async (req, res) => {
 
 // Route to store note data:
 app.put("/api/notes/", async (req, res) => {
-	// Get title, content and owner from request body:
-	const { title, content, owner } = req.body;
+	// Get title and content from request body:
+	const { title, content } = req.body;
 
 	try {
 		// Create a new Note table row:
 		await Note.create({
 			title: title.trim(),
 			content,
-			owner
+			owner: req.session.user
 		});
 
 		// Respond with success message:
@@ -186,7 +186,7 @@ app.post("/api/notes/", async (req, res) => {
 	try {
 		// Update Note matching given ID:
 		await Note.update({ title, content }, {
-			where: { id }
+			where: { id, owner: req.session.user }
 		});
 
 		// Respond with success message:
@@ -204,7 +204,7 @@ app.delete("/api/notes/:id", async (req, res) => {
 	const { id } = req.params;
 
 	// Delete note with ID:
-	await Note.destroy({ where: { id } });
+	await Note.destroy({ where: { id, owner: req.session.user } });
 
 	// Respond with success message:
 	res.send("Deleted note successfully.");
