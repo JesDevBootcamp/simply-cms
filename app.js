@@ -123,6 +123,26 @@ app.get("/api/notes/:id", async (req, res) => {
 	res.json(note);
 });
 
+// Route to update note data:
+app.post("/api/notes/", async (req, res) => {
+	// Get title, content and ID from request body:
+	const { title, content, id } = req.body;
+
+	try {
+		// Update Note matching given ID:
+		await Note.update({ title, content }, {
+			where: { id }
+		});
+
+		// Respond with success message:
+		res.send("Note updated successfully, if found.");
+	}
+	catch (error) {
+		// Respond with error message:
+		res.send("Note was not updated: " + error);
+	}
+});
+
 // Route to store note data:
 app.put("/api/notes/", async (req, res) => {
 	// Get title, content and owner from request body:
