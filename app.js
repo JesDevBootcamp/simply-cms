@@ -123,6 +123,20 @@ app.get("/api/notes/:id", async (req, res) => {
 	res.json(note);
 });
 
+// Route to get note with certain owner:
+app.get("/api/notes/user/:owner", async (req, res) => {
+	// Get owner ID within parameters:
+	const { owner } = req.params;
+
+	// Get all notes from owner:
+	const note = await Note.findAll({
+		where: { owner }
+	});
+
+	// Send note JSON data:
+	res.json(note);
+});
+
 // Route to update note data:
 app.post("/api/notes/", async (req, res) => {
 	// Get title, content and ID from request body:
