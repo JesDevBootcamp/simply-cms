@@ -55,11 +55,14 @@ app.put("/api/login/", async (req, res) => {
 	const { email, password } = req.body;
 
 	// Create password hash:
-	const hash = bcrypt.hashSync(password, 10);
+	const hash = bcrypt.hashSync(password.trim(), 10);
 
 	try {
 		// Create a new User table row:
-		await User.create({ email, password: hash });
+		await User.create({
+			email: email.trim(),
+			password: hash
+		});
 
 		// Respond with success message:
 		res.send("Sign-up and login store successful.");
@@ -127,7 +130,11 @@ app.put("/api/notes/", async (req, res) => {
 
 	try {
 		// Create a new Note table row:
-		await Note.create({ title, content, owner });
+		await Note.create({
+			title: title.trim(),
+			content,
+			owner
+		});
 
 		// Respond with success message:
 		res.send("Note stored successfully.");
