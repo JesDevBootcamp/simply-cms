@@ -2,9 +2,11 @@
 
 import { useId } from "react";
 
+import "../styles/text-field.scss";
+
 export default function TextField(props) {
 	// Destructure props:
-	const { type = "text", label, value, placeholder, onChange, required } = props;
+	const { type = "text", maxLength = 50, label, value, placeholder, onChange, required } = props;
 
 	// Create a unique ID for the input field:
 	const inputId = useId();
@@ -29,7 +31,7 @@ export default function TextField(props) {
 				value={value}
 				onChange={handleChange}
 				required={required}
-				maxLength={50}
+				maxLength={maxLength}
 			/>
 		</div>
 	);
