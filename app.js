@@ -44,6 +44,11 @@ app.get("/api/login/:id", async (req, res) => {
 	res.json(user);
 });
 
+// Route to get current login session state:
+app.get("/api/login/", (req, res) => {
+	res.send(req.session.login || false);
+});
+
 // Route to store user login information:
 app.put("/api/login/", async (req, res) => {
 	// Get email and password from request body:
