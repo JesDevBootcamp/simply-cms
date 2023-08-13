@@ -26,7 +26,10 @@ Note.init(
 		title: {
 			type: DataTypes.STRING(60),
 			allowNull: false,
-			defaultValue: "Untitled"
+			defaultValue: "Untitled",
+			validate: {
+				notEmpty: true
+			}
 		},
 		content: {
 			type: DataTypes.TEXT,

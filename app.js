@@ -53,7 +53,7 @@ app.get("/api/login/", (req, res) => {
 app.put("/api/login/", async (req, res) => {
 	// Get email and password from request body:
 	const { email, password } = req.body;
-	
+
 	// Create password hash:
 	const hash = bcrypt.hashSync(password, 10);
 
@@ -66,7 +66,7 @@ app.put("/api/login/", async (req, res) => {
 	}
 	catch (error) {
 		// Respond with error message:
-		res.send("Something went wrong: " + error);
+		res.send("Login was not created: " + error);
 	}
 });
 
@@ -125,11 +125,17 @@ app.put("/api/notes/", async (req, res) => {
 	// Get title, content and owner from request body:
 	const { title, content, owner } = req.body;
 
-	// Create a new Note table row:
-	await Note.create({ title, content, owner });
+	try {
+		// Create a new Note table row:
+		await Note.create({ title, content, owner });
 
-	// Respond with success message:
-	res.send("Note stored successfully.");
+		// Respond with success message:
+		res.send("Note stored successfully.");
+	}
+	catch (error) {
+		// Respond with error message:
+		res.send("Note was not created: " + error);
+	}
 })
 
 // Route to delete note data:
