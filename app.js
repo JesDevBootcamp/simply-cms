@@ -83,14 +83,18 @@ app.post("/api/login/", async (req, res) => {
 		where: { email }
 	});
 
-	// Validate login password hashes:
+	// Set initial login verification to false:
 	let login = false;
+
+	// Compare passwords if user exists setting login boolean:
 	if (user !== null) {
 		login = await bcrypt.compare(password, user.password);
 	}
 
-	// Store user ID in session:
-	req.session.user = user.id;
+	// Store user ID in session if login true:
+	if (login === true) {
+		req.session.user = user.id;
+	}
 
 	// Respond with and store login boolean:
 	req.session.login = login;
