@@ -5,9 +5,9 @@ import "../styles/heading.scss";
 export default function Heading({ title, subtitle }) {
 	return (
 		<header className="heading">
-			<h1 className="heading-title">{title}</h1>
+			<h2 className="heading-title">{title}</h2>
 			{subtitle && (
-				<h2 className="heading-subtitle">{subtitle}</h2>
+				<h3 className="heading-subtitle">{subtitle}</h3>
 			)}
 		</header>
 	);
