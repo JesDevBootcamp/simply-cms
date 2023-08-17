@@ -1,6 +1,6 @@
 // Login Modal: Simple modal with a login form and welcome header.
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Heading from "./Heading";
 import TextField from "./TextField";
@@ -13,15 +13,17 @@ import getLogin from "../functions/getLogin";
 import "../styles/login-modal.scss";
 
 export default function LoginModal() {
-	// Create state for if the modal is open:
-	const [modal, setModal] = useState(true);
+	// Create state for current login presence:
+	const [login, setLogin] = useState(false);
 
-	// Display modal based on login status:
-	useEffect(() => {
-		(async () => {
-			setModal(await getLogin() === false);
-		})();
-	}, []);
+	// Create event listener callback function:
+	const listener = async () => setLogin(await getLogin());
+
+	// Initially run event listener:
+	(async () => await listener())();
+
+	// Set login state on custom "login" event:
+	window.addEventListener("login", listener);
 
 	// Create states for email and password:
 	const [email, setEmail] = useState("");
@@ -32,20 +34,21 @@ export default function LoginModal() {
 		// Prevent default page reload:
 		event.preventDefault();
 
-		// Close modal or reset password on POST:
-		await postLogin(email, password) ? setModal(false) : setPassword("");
+		// POST login state and reset password:
+		await postLogin(email, password);
+		setPassword("");
 	}
 
 	// User sign-up handler:
 	async function signUpHandler(event) {
-		// Put login info into database:
+		// PUT login info into database:
 		await putLogin(email, password);
 		// Run login handler:
 		loginHandler(event);
 	}
 
 	return (
-		<dialog className="login-modal" open={modal}>
+		<dialog className="login-modal" open={!login}>
 			<Heading title="Login or Sign-up:" />
 			<form className="login-modal-form" onSubmit={loginHandler}>
 				<fieldset>
