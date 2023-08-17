@@ -2,11 +2,11 @@
 
 import axios from "axios";
 
-export default async function getLogin(truthy, falsy) {
+export default async function getLogin() {
 	// Grab login state from session storage:
 	const login = sessionStorage.getItem("login") || "false";
 
-	// Run if current login invalid:
+	// Run if no login in storage:
 	if (login === "false") {
 		// Send GET request to verify login:
 		const { data } = await axios.get("/api/login/");
@@ -14,11 +14,6 @@ export default async function getLogin(truthy, falsy) {
 		sessionStorage.setItem("login", data);
 	}
 
-	// Run callback function based on data:
-	if (truthy && falsy) {
-		(login === "false") ? falsy() : truthy();
-	}
-
 	// Return response data:
-	return login;
+	return JSON.parse(login);
 }
