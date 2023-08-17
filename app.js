@@ -135,6 +135,15 @@ app.delete("/api/login/:id", async (req, res) => {
 	}
 });
 
+// Route to logout current user:
+app.get("/api/logout/", (req, res) => {
+	// Delete user ID in session:
+	delete req.session.user;
+
+	// Respond with truthy:
+	res.send(true);
+});
+
 // Route to verify user is logged in to access notes:
 app.all("/api/notes/*", (req, res, next) => {
 	// Only access note data if user signed in:
