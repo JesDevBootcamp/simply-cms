@@ -35,18 +35,31 @@ app.get("/api/login/:id", async (req, res) => {
 	// Get ID within parameters:
 	const { id } = req.params;
 
-	// Get the user with given ID:
-	const user = await User.findOne({
-		where: { id }
-	});
+	try {
+		// Get the user with given ID:
+		const user = await User.findOne({
+			where: { userId: id }
+		});
 
-	// Respond with user data:
-	res.json(user);
+		// Respond with user data:
+		res.json(user);
+	}
+	catch {
+		// Respond with falsy:
+		res.send(false);
+	}
 });
 
-// Route to get current login session state:
+// Route to get current logged in user ID:
 app.get("/api/login/", (req, res) => {
-	res.send(req.session.login || false);
+	if (req.session.user !== undefined) {
+		// Respond with user ID:
+		res.send(req.session.user.toString());
+	}
+	else {
+		// Respond with falsy:
+		res.send(false);
+	}
 });
 
 // Route to store user login information:
@@ -64,12 +77,12 @@ app.put("/api/login/", async (req, res) => {
 			password: hash
 		});
 
-		// Respond with success message:
-		res.send("Sign-up and login store successful.");
+		// Respond with truthy:
+		res.send(true);
 	}
-	catch (error) {
-		// Respond with error message:
-		res.send("Login was not created: " + error);
+	catch {
+		// Respond with falsy:
+		res.send(false);
 	}
 });
 
@@ -93,11 +106,10 @@ app.post("/api/login/", async (req, res) => {
 
 	// Store user ID in session if login true:
 	if (login === true) {
-		req.session.user = user.id;
+		req.session.user = user.userId;
 	}
 
-	// Respond with and store login boolean:
-	req.session.login = login;
+	// Respond with login boolean:
 	res.send(login);
 });
 
@@ -106,54 +118,54 @@ app.delete("/api/login/:id", async (req, res) => {
 	// Get ID within parameters:
 	const { id } = req.params;
 
-	// Only delete user data if signed in:
-	if (req.session.login === true) {
+	// Only delete user data if user login:
+	if (req.session.user !== undefined) {
 		// Delete all notes to given user:
-		await Note.destroy({ where: { owner: id } });
+		await Note.destroy({ where: { userId: id } });
 
 		// Delete User with given email:
-		await User.destroy({ where: { id } });
+		await User.destroy({ where: { userId: id } });
 
-		// Respond with success message:
-		res.send("Deleted user data and notes.");
+		// Respond with truthy:
+		res.send(true);
 	}
 	else {
-		// Respond with error message:
-		res.send("User must be logged in for deletion.");
+		// Respond with falsy:
+		res.send(false);
 	}
 });
 
 // Route to verify user is logged in to access notes:
 app.all("/api/notes/*", (req, res, next) => {
 	// Only access note data if user signed in:
-	if (req.session.login === true) {
+	if (req.session.user !== undefined) {
 		next();
 	}
 	else {
-		// Respond with error message:
-		res.send("User must be logged in to access note.");
+		// Respond with falsy:
+		res.send(false);
 	}
 });
 
-// Route to get notes from logged in owner:
+// Route to get notes from logged in user:
 app.get("/api/notes/", async (req, res) => {
-	// Get all notes from owner:
+	// Get all notes from user:
 	const note = await Note.findAll({
-		where: { owner: req.session.user }
+		where: { userId: req.session.user }
 	});
 
 	// Send note JSON data:
 	res.json(note);
 });
 
-// Route to get logged in owner note with ID:
+// Route to get logged in user note with ID:
 app.get("/api/notes/:id", async (req, res) => {
 	// Get ID within parameters:
 	const { id } = req.params;
 
-	// Get first owner note with ID:
+	// Get first user note with ID:
 	const note = await Note.findOne({
-		where: { owner: req.session.user, id }
+		where: { userId: req.session.user, noteId: id }
 	});
 
 	// Send note JSON data:
@@ -170,15 +182,15 @@ app.put("/api/notes/", async (req, res) => {
 		await Note.create({
 			title: title.trim(),
 			content,
-			owner: req.session.user
+			userId: req.session.user
 		});
 
-		// Respond with success message:
-		res.send("Note stored successfully.");
+		// Respond with truthy:
+		res.send(true);
 	}
-	catch (error) {
-		// Respond with error message:
-		res.send("Note was not created: " + error);
+	catch {
+		// Respond with falsy:
+		res.send(false);
 	}
 });
 
@@ -190,15 +202,15 @@ app.post("/api/notes/", async (req, res) => {
 	try {
 		// Update Note matching given ID:
 		await Note.update({ title, content }, {
-			where: { id, owner: req.session.user }
+			where: { userId: req.session.user, noteId: id }
 		});
 
-		// Respond with success message:
-		res.send("Note updated successfully, if found.");
+		// Respond with truthy:
+		res.send(true);
 	}
-	catch (error) {
-		// Respond with error message:
-		res.send("Note was not updated: " + error);
+	catch {
+		// Respond with falsy:
+		res.send(false);
 	}
 });
 
@@ -208,10 +220,10 @@ app.delete("/api/notes/:id", async (req, res) => {
 	const { id } = req.params;
 
 	// Delete note with ID:
-	await Note.destroy({ where: { id, owner: req.session.user } });
+	await Note.destroy({ where: { userId: req.session.user, noteId: id } });
 
-	// Respond with success message:
-	res.send("Deleted note successfully.");
+	// Respond with truthy:
+	res.send(true);
 });
 
 // Setup Vite Express and listen to port:

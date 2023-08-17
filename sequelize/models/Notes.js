@@ -1,54 +1,25 @@
-// Notes: Creates the Notes table using Sequelize.
+// Notes: Export of attributes for the Sequelize Notes model.
 
-import { DataTypes, Model } from "sequelize";
-import util from "util";
-import connect from "../connect.js";
+import { DataTypes } from "sequelize";
 
-// Establish connection to database:
-const sequelize = await connect();
-
-// Create Note table using Sequelize Model:
-export class Note extends Model {
-	[util.inspect.custom]() {
-		return this.toJSON();
-	}
-}
-
-// Initilize Note Model structure:
-Note.init(
-	{
-		id: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			autoIncrement: true,
-			primaryKey: true
-		},
-		title: {
-			type: DataTypes.STRING(60),
-			allowNull: false,
-			defaultValue: "Untitled",
-			validate: {
-				notEmpty: true
-			}
-		},
-		content: {
-			type: DataTypes.TEXT,
-			allowNull: false,
-			defaultValue: ""
-		},
-		owner: {
-			type: DataTypes.INTEGER,
-			allowNull: false
+export default {
+	noteId: {
+		type: DataTypes.INTEGER,
+		allowNull: false,
+		autoIncrement: true,
+		primaryKey: true
+	},
+	title: {
+		type: DataTypes.STRING(60),
+		allowNull: false,
+		defaultValue: "Untitled",
+		validate: {
+			notEmpty: true
 		}
 	},
-	{
-		sequelize: sequelize,
-		modelName: "Note"
+	content: {
+		type: DataTypes.TEXT,
+		allowNull: false,
+		defaultValue: ""
 	}
-);
-
-// Synchronize Note Model:
-await Note.sync();
-
-// Export Sequelize Database:
-export default sequelize;
+}
