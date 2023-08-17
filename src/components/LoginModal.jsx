@@ -1,6 +1,6 @@
 // Login Modal: Simple modal with a login form and welcome header.
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Heading from "./Heading";
 import TextField from "./TextField";
@@ -23,7 +23,9 @@ export default function LoginModal() {
 	(async () => await listener())();
 
 	// Set login state on custom "login" event:
-	window.addEventListener("login", listener);
+	useEffect(() => {
+		window.addEventListener("login", listener);
+	}, []);
 
 	// Create states for email and password:
 	const [email, setEmail] = useState("");
