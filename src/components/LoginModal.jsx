@@ -18,10 +18,9 @@ export default function LoginModal() {
 
 	// Display modal based on login status:
 	useEffect(() => {
-		getLogin(
-			() => setModal(false),
-			() => setModal(true)
-		);
+		(async () => {
+			setModal(await getLogin() === false);
+		})();
 	}, []);
 
 	// Create states for email and password:
@@ -29,24 +28,20 @@ export default function LoginModal() {
 	const [password, setPassword] = useState("");
 
 	// Login authentication handler:
-	function loginHandler(event) {
+	async function loginHandler(event) {
 		// Prevent default page reload:
 		event.preventDefault();
 
 		// Close modal or reset password on POST:
-		postLogin(email, password,
-			() => setModal(false),
-			() => setPassword("")
-		);
+		await postLogin(email, password) ? setModal(false) : setPassword("");
 	}
 
 	// User sign-up handler:
 	async function signUpHandler(event) {
-		// Run login handler or reset password on PUT:
-		putLogin(email, password,
-			() => loginHandler(event),
-			() => setPassword("")
-		);
+		// Put login info into database:
+		await putLogin(email, password);
+		// Run login handler:
+		loginHandler(event);
 	}
 
 	return (
