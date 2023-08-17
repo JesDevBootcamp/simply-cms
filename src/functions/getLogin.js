@@ -3,14 +3,22 @@
 import axios from "axios";
 
 export default async function getLogin(truthy, falsy) {
-	// Send GET request to verify login:
-	const { data } = await axios.get("/api/login/");
+	// Grab login state from session storage:
+	const login = sessionStorage.getItem("login") || "false";
+
+	// Run if current login invalid:
+	if (login === "false") {
+		// Send GET request to verify login:
+		const { data } = await axios.get("/api/login/");
+		// Set login session to response:
+		sessionStorage.setItem("login", data);
+	}
 
 	// Run callback function based on data:
 	if (truthy && falsy) {
-		(data !== false) ? truthy() : falsy();
+		(login === "false") ? falsy() : truthy();
 	}
 
 	// Return response data:
-	return data;
+	return login;
 }
