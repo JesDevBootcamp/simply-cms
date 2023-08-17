@@ -1,4 +1,4 @@
-// Get Login: Sends a login GET request and runs callback.
+// Get Login: Sends a login GET request and returns data.
 
 import axios from "axios";
 
