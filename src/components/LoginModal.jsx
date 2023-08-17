@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 
-import Heading from "../components/Heading";
-import TextField from "../components/TextField";
-import Button from "../components/Button";
+import Heading from "./Heading";
+import TextField from "./TextField";
+import Button from "./Button";
 
 import postLogin from "../functions/postLogin";
 import putLogin from "../functions/putLogin";
