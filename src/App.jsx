@@ -9,7 +9,7 @@ import "./styles/app.scss";
 export default function App() {
 	return (
 		<Routes>
-			<Route index element={<EditorPage />} />
+			<Route path="*" element={<EditorPage />} />
 		</Routes>
 	);
 }
