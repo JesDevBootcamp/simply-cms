@@ -113,6 +113,30 @@ app.post("/api/login/", async (req, res) => {
 	res.send(login);
 });
 
+// Route to modify user login information:
+app.patch("/api/login/", async (req, res) => {
+	// Get email and password from request body:
+	const { email, password } = req.body;
+
+	// Create password hash:
+	const hash = bcrypt.hashSync(password.trim(), 10);
+
+	// Only modify user data if logged in:
+	if (req.session.user !== undefined) {
+		// Update logged in user with new email and password:
+		await User.update({ email, password: hash }, {
+			where: { userId: req.session.user }
+		});
+
+		// Respond with truthy:
+		res.send(true);
+	}
+	else {
+		// Respond with falsy:
+		res.send(false);
+	}
+});
+
 // Route to delete a user login and their notes:
 app.delete("/api/login/:id", async (req, res) => {
 	// Get ID within parameters:
