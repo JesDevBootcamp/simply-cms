@@ -10,7 +10,7 @@ export default function NoteList({ callback }) {
 	// Get array of all user notes:
 	useEffect(() => {
 		(async () => setNotes(await getNotes() || []))();
-	}, [callback]);
+	}, []);
 
 	return (
 		<ul className="note-list">
