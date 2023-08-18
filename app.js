@@ -30,31 +30,16 @@ app.use(session({
 // Configure Vite Express:
 ViteExpress.config({ printViteDevServerHost: true });
 
-// Route to get given user data:
-app.get("/api/login/:id", async (req, res) => {
-	// Get ID within parameters:
-	const { id } = req.params;
-
-	try {
-		// Get the user with given ID:
+// Route to get logged in user data:
+app.get("/api/login/", async (req, res) => {
+	if (req.session.user !== undefined) {
+		// Get the logged in user data:
 		const user = await User.findOne({
-			where: { userId: id }
+			where: { userId: req.session.user }
 		});
 
 		// Respond with user data:
 		res.json(user);
-	}
-	catch {
-		// Respond with falsy:
-		res.send(false);
-	}
-});
-
-// Route to get current logged in user ID:
-app.get("/api/login/", (req, res) => {
-	if (req.session.user !== undefined) {
-		// Respond with user ID:
-		res.send(req.session.user.toString());
 	}
 	else {
 		// Respond with falsy:
