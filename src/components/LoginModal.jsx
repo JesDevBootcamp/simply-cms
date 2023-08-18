@@ -51,7 +51,7 @@ export default function LoginModal() {
 
 	return (
 		<dialog className="login-modal" open={!login}>
-			<Heading title="Simply Notes" subtitle="Login or Sign-up:" />
+			<Heading title="Simply Notes!" subtitle="Login or Sign-up:" />
 			<form className="login-modal-form" onSubmit={loginHandler}>
 				<fieldset>
 					<TextField
