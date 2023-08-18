@@ -122,18 +122,15 @@ app.patch("/api/login/", async (req, res) => {
 	}
 });
 
-// Route to delete a user login and their notes:
-app.delete("/api/login/:id", async (req, res) => {
-	// Get ID within parameters:
-	const { id } = req.params;
-
+// Route to delete current user and their notes:
+app.delete("/api/login/", async (req, res) => {
 	// Only delete user data if user login:
 	if (req.session.user !== undefined) {
 		// Delete all notes to given user:
-		await Note.destroy({ where: { userId: id } });
+		await Note.destroy({ where: { userId: req.session.user } });
 
 		// Delete User with given email:
-		await User.destroy({ where: { userId: id } });
+		await User.destroy({ where: { userId: req.session.user } });
 
 		// Respond with truthy:
 		res.send(true);
