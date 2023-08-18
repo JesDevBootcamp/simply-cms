@@ -11,7 +11,7 @@ export default async function getLogin() {
 		// Send GET request to verify login:
 		const { data } = await axios.get("/api/login/");
 		// Set login session to response:
-		sessionStorage.setItem("login", data);
+		sessionStorage.setItem("login", JSON.stringify(data));
 	}
 
 	// Return response data:
