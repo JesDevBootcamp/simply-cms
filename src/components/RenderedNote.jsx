@@ -3,7 +3,8 @@
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 import { useEffect, useState } from "react";
-import axios from "axios";
+
+import getNote from "../functions/getNote";
 
 import "../styles/rendered-note.scss";
 
@@ -13,17 +14,9 @@ export default function RenderedNote({ id }) {
 
 	// Update rendered content on ID change:
 	useEffect(() => {
-		(async () => {
-			try {
-				// Get page data from axios API call:
-				const { data } = await axios.get(`/api/notes/${id}`);
-
-				// Set the Markdown state:
-				setMarkdown(data.content);
-			}
-			catch (error) {
-				console.error("The following error occurred:", error);
-			}
+		(async() => {
+			const { content } = await getNote(id);
+			setMarkdown(content || "");
 		})();
 	}, [id]);
 
