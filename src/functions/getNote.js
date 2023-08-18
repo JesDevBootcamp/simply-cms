@@ -1,8 +1,8 @@
-// Get Note By ID: Sends a GET request and returns user note data with ID.
+// Get Note: Sends a GET request and returns user note data with ID.
 
 import axios from "axios";
 
-export default async function getNoteById(id) {
+export default async function getNote(id) {
 	// Send GET request for user note with ID:
 	const { data } = await axios.get("/api/notes/" + id);
 
