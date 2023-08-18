@@ -1,4 +1,4 @@
-// Post Login: Sends a POST request and returns boolean.
+// Post Login: Sends a login POST request and returns boolean.
 
 import axios from "axios";
 
