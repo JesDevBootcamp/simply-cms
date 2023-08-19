@@ -6,26 +6,32 @@ import Heading from "./Heading";
 import TextField from "./TextField";
 import Button from "./Button";
 
+import getLogin from "../functions/getLogin";
 import postLogin from "../functions/postLogin";
 import putLogin from "../functions/putLogin";
-import getLogin from "../functions/getLogin";
 
 import "../styles/login-modal.scss";
 
 export default function LoginModal() {
-	// Create state for current login presence:
-	const [login, setLogin] = useState(false);
+	// Create state for current display presence:
+	const [open, setOpen] = useState(true);
 
 	// Create event listener callback function:
-	const listener = async () => setLogin(await getLogin());
+	const listener = async () => setOpen(await getLogin() === false);
 
-	// Initially run event listener:
-	(async () => await listener())();
-
-	// Set login state on custom "login" event:
+	// Update open state given login status:
 	useEffect(() => {
-		window.addEventListener("login", listener);
-	}, []);
+		// Create and run "login" event listener:
+		(async () => {
+			window.addEventListener("login", listener);
+			await listener();
+		})();
+
+		// Cleanup "login" event listener on unmount:
+		return () => {
+			window.removeEventListener("login", listener);
+		};
+	}, [open]);
 
 	// Create states for email and password:
 	const [email, setEmail] = useState("");
@@ -36,8 +42,10 @@ export default function LoginModal() {
 		// Prevent default page reload:
 		event.preventDefault();
 
-		// POST login state and reset password:
-		await postLogin(email, password);
+		// POST login and set display state if true:
+		await postLogin(email, password) && setOpen(false);
+
+		// Reset password state:
 		setPassword("");
 	}
 
@@ -45,12 +53,13 @@ export default function LoginModal() {
 	async function signUpHandler(event) {
 		// PUT login info into database:
 		await putLogin(email, password);
+
 		// Run login handler:
 		loginHandler(event);
 	}
 
 	return (
-		<dialog className="login-modal" open={!login}>
+		<dialog className="login-modal" open={open}>
 			<Heading title="Simply Notes!" subtitle="Login or Sign-up:" />
 			<form className="login-modal-form" onSubmit={loginHandler}>
 				<fieldset>
