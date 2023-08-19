@@ -10,7 +10,9 @@ export default async function getLogout() {
 	sessionStorage.removeItem("login");
 
 	// Dispatch custom "login" event:
-	window.dispatchEvent(new CustomEvent("login"));
+	window.dispatchEvent(new CustomEvent("login", {
+		cancelable: false
+	}));
 
 	// Return response data:
 	return JSON.parse(data);
