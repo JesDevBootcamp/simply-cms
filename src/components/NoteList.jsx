@@ -14,13 +14,13 @@ export default function NoteList({ callback }) {
 
 	return (
 		<ul className="note-list">
-			{notes.map(({ title, content, noteId }) =>
-				<li className="note-list-item" key={noteId} onClick={() => callback(noteId)}>
+			{notes.map(note =>
+				<li className="note-list-item" onClick={() => callback(note)} key={note.noteId}>
 					<h4 className="note-list-title">
-						{title}
+						{note.title}
 					</h4>
 					<span className="note-list-content">
-						{content.replace(/(.{100})..+/, "$1&hellip;")}
+						{note.content.replace(/(.{100})..+/, "$1&hellip;")}
 					</span>
 				</li>
 			)}
