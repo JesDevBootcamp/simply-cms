@@ -1,37 +1,26 @@
-// Login Modal: Simple modal with a login form and welcome header.
+// Login Page: Simple page with a login form and welcome header.
 
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
-import Heading from "./Heading";
-import TextField from "./TextField";
-import Button from "./Button";
+import Heading from "../components/Heading";
+import TextField from "../components/TextField";
+import Button from "../components/Button";
 
-import getLogin from "../functions/getLogin";
 import postLogin from "../functions/postLogin";
 import putLogin from "../functions/putLogin";
+import getLogin from "../functions/getLogin";
 
-import "../styles/login-modal.scss";
+import "../styles/login-page.scss";
 
-export default function LoginModal() {
-	// Create state for current display presence:
-	const [open, setOpen] = useState(true);
+export default function LoginPage() {
+	// Create state for current login presence:
+	const [login, setLogin] = useState(false);
 
-	// Create event listener callback function:
-	const listener = async () => setOpen(await getLogin() === false);
-
-	// Update open state given login status:
+	// Default login state to current presence:
 	useEffect(() => {
-		// Create and run "login" event listener:
-		(async () => {
-			window.addEventListener("login", listener);
-			await listener();
-		})();
-
-		// Cleanup "login" event listener on unmount:
-		return () => {
-			window.removeEventListener("login", listener);
-		};
-	}, [open]);
+		(async() => setLogin(await getLogin() !== false))();
+	}, []);
 
 	// Create states for email and password:
 	const [email, setEmail] = useState("");
@@ -42,8 +31,8 @@ export default function LoginModal() {
 		// Prevent default page reload:
 		event.preventDefault();
 
-		// POST login and set display state if true:
-		await postLogin(email, password) && setOpen(false);
+		// POST login and set state if true:
+		await postLogin(email, password) && setLogin(true);
 
 		// Reset password state:
 		setPassword("");
@@ -58,10 +47,10 @@ export default function LoginModal() {
 		loginHandler(event);
 	}
 
-	return (
-		<dialog className="login-modal" open={open}>
+	return !login && (
+		<main className="login-page">
 			<Heading title="Simply Notes!" subtitle="Login or Sign-up:" />
-			<form className="login-modal-form" onSubmit={loginHandler}>
+			<form className="login-page-form" onSubmit={loginHandler}>
 				<fieldset>
 					<TextField
 						label="Enter Email:"
@@ -83,6 +72,6 @@ export default function LoginModal() {
 					<Button type="button" action={signUpHandler}>Sign-up</Button>
 				</fieldset>
 			</form>
-		</dialog>
-	);
+		</main>
+	) || <Navigate to="editor" />;
 }
