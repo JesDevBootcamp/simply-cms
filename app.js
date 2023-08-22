@@ -194,14 +194,14 @@ app.put("/api/notes/", async (req, res) => {
 
 	try {
 		// Create a new Note table row:
-		await Note.create({
+		const note = await Note.create({
 			title: title.trim(),
 			content,
 			userId: req.session.user
 		});
 
-		// Respond with truthy:
-		res.send(true);
+		// Respond with note data:
+		res.json(note);
 	}
 	catch {
 		// Respond with falsy:
@@ -215,13 +215,20 @@ app.post("/api/notes/", async (req, res) => {
 	const { title, content, id } = req.body;
 
 	try {
-		// Update Note matching given ID:
-		await Note.update({ title: title.trim(), content }, {
+		// Get note matching given ID:
+		const note = await Note.findOne({
 			where: { userId: req.session.user, noteId: id }
 		});
 
-		// Respond with truthy:
-		res.send(true);
+		// Update note title and content:
+		note.title = title.trim();
+		note.content = content;
+
+		// Save note data:
+		await note.save();
+
+		// Respond with note data:
+		res.json(note);
 	}
 	catch {
 		// Respond with falsy:
