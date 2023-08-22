@@ -57,13 +57,13 @@ app.put("/api/login/", async (req, res) => {
 
 	try {
 		// Create a new User table row:
-		await User.create({
+		const user = await User.create({
 			email: email.trim(),
 			password: hash
 		});
 
-		// Respond with truthy:
-		res.send(true);
+		// Respond with user data:
+		res.json(user);
 	}
 	catch {
 		// Respond with falsy:
@@ -108,13 +108,20 @@ app.patch("/api/login/", async (req, res) => {
 
 	// Only modify user data if logged in:
 	if (req.session.user !== undefined) {
-		// Update logged in user with new email and password:
-		await User.update({ email, password: hash }, {
+		// Find the logged in user:
+		const user = await User.findOne({
 			where: { userId: req.session.user }
 		});
+		
+		// Update user with new email and password:
+		user.email = email;
+		user.password = hash;
 
-		// Respond with truthy:
-		res.send(true);
+		// Save user data:
+		await user.save();
+
+		// Respond with user data:
+		res.json(user);
 	}
 	else {
 		// Respond with falsy:
