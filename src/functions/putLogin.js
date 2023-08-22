@@ -7,5 +7,5 @@ export default async function putLogin(email, password) {
 	const { data } = await axios.put("/api/login/", { email, password });
 
 	// Return response data boolean:
-	return JSON.parse(data);
+	return data;
 }

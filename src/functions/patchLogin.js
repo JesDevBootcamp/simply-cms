@@ -7,5 +7,5 @@ export default async function patchLogin(email, password) {
 	const { data } = await axios.patch("/api/login/", { email, password });
 
 	// Return response data boolean:
-	return JSON.parse(data);
+	return data;
 }

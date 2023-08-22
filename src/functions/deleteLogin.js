@@ -7,5 +7,5 @@ export default async function deleteLogin() {
 	const { data } = await axios.delete("/api/login/");
 
 	// Return response data boolean:
-	return JSON.parse(data);
+	return data;
 }
