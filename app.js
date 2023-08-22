@@ -216,7 +216,7 @@ app.post("/api/notes/", async (req, res) => {
 
 	try {
 		// Update Note matching given ID:
-		await Note.update({ title, content }, {
+		await Note.update({ title: title.trim(), content }, {
 			where: { userId: req.session.user, noteId: id }
 		});
 
