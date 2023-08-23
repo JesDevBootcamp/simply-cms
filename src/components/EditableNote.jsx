@@ -1,7 +1,6 @@
 // Editable Note: Simple editable note that autosaves.
 
 import { useEffect, useState } from "react";
-import DOMPurify from "dompurify";
 
 import postNote from "../functions/postNote";
 
@@ -40,7 +39,7 @@ export default function EditableNote({ note, callback }) {
 			className="editable-note"
 			value={content}
 			onChange={(event) => {
-				setContent(DOMPurify.sanitize(event.target.value));
+				setContent(event.target.value);
 			}}
 		/>
 	);
