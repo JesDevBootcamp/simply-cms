@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-export default async function putNote(title, content) {
+export default async function putNote(title = "No Content", content = "") {
 	// Send PUT request to add note information:
 	const { data } = await axios.put("/api/notes/", { title, content });
 
