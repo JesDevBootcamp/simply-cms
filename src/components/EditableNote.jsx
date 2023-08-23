@@ -9,7 +9,10 @@ import "../styles/editable-note.scss";
 
 export default function EditableNote({ note, callback }) {
 	// Create state for note content:
-	const [content, setContent] = useState(note.content);
+	const [content, setContent] = useState("");
+
+	// Initially set note content:
+	useEffect(() => setContent(note.content), [note]);
 
 	// Automatically save note and run callback on change:
 	useEffect(() => {
