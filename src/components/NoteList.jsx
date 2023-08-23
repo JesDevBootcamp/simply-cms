@@ -1,5 +1,7 @@
 // Note List: Scrollable list of all user notes.
 
+import "../styles/note-list.scss";
+
 export default function NoteList({ list, callback }) {
 	return (
 		<ul className="note-list">
