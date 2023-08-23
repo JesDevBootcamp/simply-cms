@@ -20,9 +20,9 @@ export default function NoteControls({ note, callback }) {
 	}
 
 	return (
-		<div className="note-controls">
+		<span className="note-controls">
 			<Button action={putHandler}>Create</Button>
 			<Button action={deleteHandler}>Delete</Button>
-		</div>
+		</span>
 	);
 }
