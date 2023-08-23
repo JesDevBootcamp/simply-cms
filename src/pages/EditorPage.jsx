@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import NoteList from "../components/NoteList";
 import EditableNote from "../components/EditableNote";
 import RenderedNote from "../components/RenderedNote";
+import NoteControls from "../components/NoteControls";
 
 import getLogin from "../functions/getLogin";
 import getLogout from "../functions/getLogout";
@@ -49,16 +50,19 @@ export default function EditorPage() {
 		})();
 	}, [note]);
 
-	return login ? note && (
+	return login ? (
 		<main className="editor-page">
 			<Heading title="Simply Notes!" />
 			<div className="editor-page-controls">
+				<NoteControls note={note} callback={setNote} />
 				<Button action={logoutHander}>Logout</Button>
 			</div>
 			<div className="editor-page-content">
-				<NoteList list={allNotes} callback={setNote} />
-				<EditableNote note={note} callback={setNote} />
-				<RenderedNote content={note.content} />
+				{note && <>
+					<NoteList list={allNotes} callback={setNote} />
+					<EditableNote note={note} callback={setNote} />
+					<RenderedNote content={note.content} />
+				</>}
 			</div>
 		</main>
 	) : <Navigate to="/" />;
