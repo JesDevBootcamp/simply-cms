@@ -9,7 +9,7 @@ export const database = await connect();
 
 // Create User and Note tables using Sequelize Model:
 export const User = database.define("User", UserModel);
-export const Note = database.define("Note", NoteModel);
+export const Note = database.define("Note", NoteModel, { timestamps: true });
 
 // Create a One-To-Many relationship with User/Note Models:
 User.hasMany(Note, { foreignKey: { name: "userId", field: "user_id" } });

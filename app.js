@@ -173,7 +173,8 @@ app.all("/api/notes/*", (req, res, next) => {
 app.get("/api/notes/", async (req, res) => {
 	// Get all notes from user:
 	const note = await Note.findAll({
-		where: { userId: req.session.user }
+		where: { userId: req.session.user },
+		order: [["updated_at", "DESC"]]
 	});
 
 	// Send note JSON data:
