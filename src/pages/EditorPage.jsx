@@ -36,15 +36,17 @@ export default function EditorPage() {
 	const [note, setNote] = useState(false);
 
 	// Initialize note state data:
-	useEffect(() => async() => {
-		// Get array of all notes in database:
-		let array = await getNotes();
-		// Put note in database and array if none:
-		array = array.length !== 0 ? array : [await putNote()];
-		// If not set note is first in array:
-		!note && setNote(array[0]);
-		// Set all notes to those in array:
-		setAllNotes(array);
+	useEffect(() => {
+		(async() => {
+			// Get array of all notes in database:
+			let array = await getNotes();
+			// Put note in database and array if none:
+			array = array.length !== 0 ? array : [await putNote()];
+			// If not set note is first in array:
+			!note && setNote(array[0]);
+			// Set all notes to those in array:
+			setAllNotes(array);
+		})();
 	}, [note]);
 
 	return login ? note && (
