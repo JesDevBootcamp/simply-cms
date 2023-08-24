@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(session({
 	secret: "super-secret-notes-app",
 	saveUninitialized: false,
-	resave: false,
+	resave: true,
 	cookie: {
 		sameSite: true,
 		maxAge: 60 * (60 * 1000)
