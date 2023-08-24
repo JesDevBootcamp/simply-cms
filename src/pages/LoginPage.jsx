@@ -31,20 +31,14 @@ export default function LoginPage() {
 		// Prevent default page reload:
 		event.preventDefault();
 
+		// PUT login info into database when no account:
+		await putLogin(email, password);
+
 		// POST login and set state if true:
 		await postLogin(email, password) && setLogin(true);
 
 		// Reset password state:
 		setPassword("");
-	}
-
-	// User sign-up handler:
-	async function signUpHandler(event) {
-		// PUT login info into database:
-		await putLogin(email, password);
-
-		// Run login handler:
-		loginHandler(event);
 	}
 
 	return !login && (
@@ -67,10 +61,7 @@ export default function LoginPage() {
 						onChange={setPassword}
 					/>
 				</fieldset>
-				<fieldset>
-					<Button>Login</Button>
-					<Button type="button" action={signUpHandler}>Sign-up</Button>
-				</fieldset>
+				<Button>Login</Button>
 			</form>
 		</main>
 	) || <Navigate to="editor" />;
