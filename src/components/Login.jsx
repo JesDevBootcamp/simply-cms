@@ -7,7 +7,7 @@ import Notification from "./Notification";
 
 import getLogin from "../functions/getLogin";
 
-export default function Login() {
+export default function Login({ redirect = false }) {
 	// Create state for current login presence:
 	const [login, setLogin] = useState(true);
 
@@ -17,7 +17,12 @@ export default function Login() {
 	}, []);
 
 	// Render Notification if logged in otherwise navigate to root:
-	return login && (
-		<Notification message="Successfully Logged In." /> 
-	) || <Navigate to="/" />;
+	return login && <>
+		{redirect && (
+			<Navigate to={redirect} />
+		)}
+		{redirect === false && (
+			<Notification message="Successfully Logged In." />
+		)}
+	</> || <Navigate to="/" />;
 }
