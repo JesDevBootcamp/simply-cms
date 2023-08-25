@@ -1,28 +1,30 @@
-// Login: Renders Notification when logged in and otherwise navigates to root.
+// Login: Redirects based on current login status.
 
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-
-import Notification from "./Notification";
 
 import getLogin from "../functions/getLogin";
 
 export default function Login({ redirect = false }) {
 	// Create state for current login presence:
-	const [login, setLogin] = useState(true);
+	const [login, setLogin] = useState(null);
 
-	// Default login state to current presence:
+	// Set current login presence if not true:
 	useEffect(() => {
-		(async() => setLogin(await getLogin() !== false))();
-	}, []);
+		if (login !== true) {
+			(async() => {
+				setLogin(await getLogin() !== false);
+			})();
+		}
+	});
 
-	// Render Notification if logged in otherwise navigate to root:
-	return login && <>
-		{redirect && (
+	// Redirect based on login state:
+	return <>
+		{login === true && !!redirect && (
 			<Navigate to={redirect} />
 		)}
-		{redirect === false && (
-			<Notification message="Successfully Logged In." />
+		{login === false && (
+			<Navigate to="/" replace={true} />
 		)}
-	</> || <Navigate to="/" />;
+	</>;
 }
