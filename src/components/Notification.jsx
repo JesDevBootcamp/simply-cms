@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import "../styles/notification.scss";
+
 export default function Notification({ message }) {
 	// Create state for whether notification is open:
 	const [open, setOpen] = useState(true);
