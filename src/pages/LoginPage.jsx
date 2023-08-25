@@ -1,7 +1,6 @@
 // Login Page: Simple page with a login form and welcome header.
 
-import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useState } from "react";
 
 import Heading from "../components/Heading";
 import TextField from "../components/TextField";
@@ -9,18 +8,13 @@ import Button from "../components/Button";
 
 import postLogin from "../functions/postLogin";
 import putLogin from "../functions/putLogin";
-import getLogin from "../functions/getLogin";
+import useLogin from "../functions/useLogin"
 
 import "../styles/login-page.scss";
 
 export default function LoginPage() {
 	// Create state for current login presence:
-	const [login, setLogin] = useState(false);
-
-	// Default login state to current presence:
-	useEffect(() => {
-		(async() => setLogin(await getLogin() !== false))();
-	}, []);
+	const [login, setLogin] = useLogin("editor");
 
 	// Create states for email and password:
 	const [email, setEmail] = useState("");
@@ -64,5 +58,5 @@ export default function LoginPage() {
 				<Button>Login</Button>
 			</form>
 		</main>
-	) || <Navigate to="editor" />;
+	);
 }
