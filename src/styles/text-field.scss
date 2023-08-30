@@ -1,0 +1,35 @@
+// Text Field: Styles for the text input control.
+
+@use "members" as *;
+
+.text-field {
+	&-label {
+		display: block;
+		margin: 4px 0;
+		font-family: var(--sans-serif);
+		font-size: var(--medium);
+	}
+	&-input {
+		display: block;
+		font-size: var(--medium);
+		width: 100%;
+		padding: size(-3) size(-2);
+		margin: 2px 0;
+		color: inherit;
+		appearance: none;
+		outline: none;
+		@include color-schemes using ($color) {
+			border: 1px solid contrast-color($gray, $color, a11y(aa ui));
+			background-color: $color;
+			&:focus {
+				border-color: contrast-color($primary, $color, a11y(aa ui));
+				&:invalid {
+					border-color: contrast-color($danger, $color, a11y(aa ui));
+				}
+				&:valid {
+					border-color: contrast-color($success, $color, a11y(aa ui));
+				}
+			}
+		}
+	}
+}
