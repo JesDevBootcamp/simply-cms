@@ -1,0 +1,35 @@
+// Members: Forwards for Sass members and CSS custom properties.
+
+@forward "precolor" with (
+	$light: #F9F0C8
+);
+
+@forward "presized";
+@use "presized" as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Bellota:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;700&family=Nanum+Brush+Script&display=swap');
+
+#root {
+	@include container(root);
+}
+
+#root * {
+	/* Font Families: */
+	--sans-serif: 'Inter', sans-serif;
+	--display-font: 'Bellota', cursive;
+	--brand-font: 'Nanum Brush Script', cursive;
+
+	/* Absolute Size Values: */
+	@include font-size(-3, --xx-small);
+	@include font-size(-2, --x-small);
+	@include font-size(-1, --small);
+	@include font-size(0, --medium);
+	@include font-size(1, --large);
+	@include font-size(2, --x-large);
+	@include font-size(3, --xx-large);
+	@include font-size(4, --xxx-large);
+
+	/* Relative Size Values: */
+	#{--smaller}: size(-1);
+	#{--larger}: size(1);
+}
