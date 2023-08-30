@@ -1,0 +1,28 @@
+// Button: Styles for the clickable action element.
+
+@use "members" as *;
+
+.button {
+	display: inline-block;
+	font-size: var(--medium);
+	background-color: transparent;
+	padding: size(-3) size(0);
+	margin: 0 0 4px 4px;
+	font-weight: bold;
+	appearance: none;
+	cursor: pointer;
+	&:active {
+		transform: scale(0.98);
+	}
+	@extend .primary;
+	@each $name, $color in $color-palette {
+		&.#{$name} {
+			@include color-schemes using ($bg) {
+				border: 1px solid high-contrast($gray, $bg, a11y(aa ui));
+				@include contrast using ($ratio) {
+					color: contrast-color($color, $bg, $ratio);
+				}
+			}
+		}
+	}
+}
