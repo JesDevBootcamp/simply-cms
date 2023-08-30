@@ -1,0 +1,13 @@
+// Heading: Styles for the application greeter or header.
+
+@use "members" as *;
+
+.heading {
+	&-title, &-subtitle {
+		margin: 0;
+	}
+	&-title {
+		font-family: var(--brand-font);
+		@include font-size(5);
+	}
+}
