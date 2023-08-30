@@ -1,0 +1,71 @@
+// App: Styles for the entire application.
+
+@use "members" as *;
+
+*, ::before, ::after {
+	box-sizing: border-box;
+	max-width: 100%;
+}
+
+#root {
+	position: absolute;
+	inset: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	line-height: size(2);
+	font-family: var(--sans-serif);
+	color-scheme: light dark;
+	border-top: 5px solid color-weight($gray, 500);
+	overflow: auto;
+	@include color-schemes using ($color) {
+		background-color: $color;
+		color: high-contrast($white $black, $color);
+	}
+}
+
+body {
+	margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: var(--larger);
+	font-family: var(--display-font);
+	margin: var(--xx-small) 0;
+}
+
+h1 {
+	font-size: var(--xx-large);
+}
+
+h2 {
+	font-size: var(--x-large);
+}
+
+h3 {
+	font-size: var(--large);
+}
+
+h4 {
+	font-size: var(--medium);
+}
+
+h5 {
+	font-size: var(--small);
+}
+
+h6 {
+	font-size: var(--x-small);
+}
+
+small, sup, sub {
+	font-size: var(--smaller);
+}
+
+a[href] {
+	@include color-schemes using ($color) {
+		@include contrast using ($ratio) {
+			color: contrast-color($primary, $color, $ratio);
+		}
+	}
+}
