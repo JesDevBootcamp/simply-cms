@@ -45,7 +45,7 @@ export default function LoginPage() {
 		<main className="login-page">
 			<Heading title="Simply Notes!" subtitle="Login or Sign-up:" />
 			<form className="login-page-form" onSubmit={loginHandler}>
-				<fieldset>
+				<fieldset className="login-page-inputs">
 					<TextField
 						label="Enter Email:"
 						type="email"
@@ -61,9 +61,9 @@ export default function LoginPage() {
 						onChange={setPassword}
 					/>
 				</fieldset>
-				<fieldset>
+				<fieldset className="login-page-buttons">
  					<Button>Login</Button>
- 					<Button type="button" action={signUpHandler}>Sign-up</Button>
+ 					<Button variant="success" type="button" action={signUpHandler}>Sign-up</Button>
  				</fieldset>
 			</form>
 		</main>
