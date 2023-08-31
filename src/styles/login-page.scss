@@ -5,9 +5,11 @@
 .login-page {
 	display: block;
 	width: $lg;
-	padding: var(--xx-large);
 	margin: auto;
 	@include container(login-page);
+	@include viewport {
+		@include modular-scale(3, padding);
+	}
 	fieldset {
 		padding: 0;
 		margin: var(--xx-small) 0;
