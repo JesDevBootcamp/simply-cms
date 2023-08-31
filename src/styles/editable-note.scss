@@ -1,0 +1,16 @@
+// Editable Note: Styles for the note edit area.
+
+@use "members" as *;
+
+.editable-note {
+	display: block;
+	min-width: 100%;
+	height: $sm;
+	font-size: var(--medium);
+	font-family: inherit;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	resize: none;
+	@include modular-scale(1, padding);
+}
