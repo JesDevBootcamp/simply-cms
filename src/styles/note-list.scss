@@ -23,6 +23,10 @@
 		font-family: var(--brand-font);
 		font-size: var(--larger);
 		padding: 0 size(0);
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		flex: 0 0 auto;
 		cursor: pointer;
 		&:not(:hover) {
 			transition: background-color 150ms linear;
