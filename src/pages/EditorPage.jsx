@@ -53,8 +53,8 @@ export default function EditorPage() {
 				<Button action={logoutHander} variant="warning">Logout</Button>
 			</div>
 			<div className="editor-page-controls">
-				<NoteList list={allNotes} callback={setNote} />
 				{note && <>
+					<NoteList list={allNotes} callback={setNote} />
 					<EditableNote note={note} callback={setNote} />
 					<NoteControls note={note} callback={setNote} />
 				</>}
