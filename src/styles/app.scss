@@ -63,6 +63,9 @@ small, sup, sub {
 }
 
 a[href] {
+	&:not(:hover, :focus) {
+		text-decoration-line: none;
+	}
 	@include color-schemes using ($color) {
 		@include contrast using ($ratio) {
 			color: contrast-color($primary, $color, $ratio);
