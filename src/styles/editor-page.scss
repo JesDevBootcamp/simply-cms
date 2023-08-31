@@ -19,7 +19,7 @@
 		z-index: 1;
 		inset: auto size(-1) 0;
 		display: flex;
-		flex-flow: row wrap;
+		flex-flow: column nowrap;
 		max-width: $lg;
 		height: 66vh;
 		border-width: 1px 1px 0;
@@ -35,6 +35,22 @@
 			border-color: contrast-color($gray, $color, a11y(aa ui));
 			background-color: $color;
 			box-shadow: 0 -8px 16px -12px color-shift($color, 25%);
+		}
+		.note-list {
+			display: block;
+			margin: 0;
+		}
+		.editable-note {
+			display: block;
+			flex: 1 1 0;
+		}
+		.note-controls {
+			display: flex;
+			flex-flow: row wrap;
+			padding: size(-3);
+			& > * {
+				flex: 1 1 auto;
+			}
 		}
 	}
 	&-content {
