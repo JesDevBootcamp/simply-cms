@@ -1,8 +1,8 @@
 // Editor Page: Page for editing and creating notes.
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import Heading from "../components/Heading";
 import Button from "../components/Button";
 import NoteList from "../components/NoteList";
 import EditableNote from "../components/EditableNote";
@@ -46,15 +46,19 @@ export default function EditorPage() {
 
 	return login && (
 		<main className="editor-page">
-			<Heading title="Simply Notes!" />
+			<div className="editor-page-nav">
+				<Link to="/account">Manage Account</Link>
+				<Button action={logoutHander} variant="warning">Logout</Button>
+			</div>
 			<div className="editor-page-controls">
-				<NoteControls note={note} callback={setNote} />
-				<Button action={logoutHander}>Logout</Button>
+				<NoteList list={allNotes} callback={setNote} />
+				{note && <>
+					<EditableNote note={note} callback={setNote} />
+					<NoteControls note={note} callback={setNote} />
+				</>}
 			</div>
 			<div className="editor-page-content">
 				{note && <>
-					<NoteList list={allNotes} callback={setNote} />
-					<EditableNote note={note} callback={setNote} />
 					<RenderedNote content={note.content} />
 				</>}
 			</div>
