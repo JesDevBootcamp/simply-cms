@@ -9,11 +9,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Bellota:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;700&family=Nanum+Brush+Script&display=swap');
 
-#root {
-	@include container(root);
-}
-
-#root * {
+* {
 	/* Font Families: */
 	--sans-serif: 'Inter', sans-serif;
 	--display-font: 'Bellota', cursive;
