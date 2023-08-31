@@ -8,7 +8,7 @@ export default function NoteList({ list, callback }) {
 			{list.map((note) => (
 				<li className="note-list-item"
 					onClick={() => callback(note)}
-					onKeyUp={() => callback(note)}
+					onFocus={() => callback(note)}
 					key={note.noteId}
 					tabIndex={0}>
 					<strong>{note.title}</strong>
