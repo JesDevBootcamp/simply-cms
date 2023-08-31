@@ -4,7 +4,7 @@ import "../styles/note-list.scss";
 
 export default function NoteList({ list, callback }) {
 	return (
-		<ul className="note-list">
+		<ul className="note-list" tabIndex={0}>
 			{list.map((note) => (
 				<li className="note-list-item"
 					onClick={() => callback(note)}
