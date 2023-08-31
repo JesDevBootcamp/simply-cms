@@ -21,8 +21,8 @@ export default function NoteControls({ note, callback }) {
 
 	return (
 		<span className="note-controls">
-			<Button action={putHandler}>Create</Button>
-			<Button action={deleteHandler}>Delete</Button>
+			<Button variant="success" action={putHandler}>Create</Button>
+			<Button variant="danger" action={deleteHandler}>Delete</Button>
 		</span>
 	);
 }
