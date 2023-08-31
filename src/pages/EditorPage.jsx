@@ -47,7 +47,9 @@ export default function EditorPage() {
 	return login && (
 		<main className="editor-page">
 			<div className="editor-page-nav">
-				<Link to="/account">Manage Account</Link>
+				<Link to="/account">
+					<Button variant="info">Manage Account</Button>
+				</Link>
 				<Button action={logoutHander} variant="warning">Logout</Button>
 			</div>
 			<div className="editor-page-controls">
