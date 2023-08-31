@@ -1,13 +1,8 @@
 // Note List: Scrollable list of all user notes.
 
-import { useState } from "react";
-
 import "../styles/note-list.scss";
 
-export default function NoteList({ list, callback }) {
-	// Create state for active note item:
-	const [active, setActive] = useState(list[0].noteId);
-
+export default function NoteList({ list, active, callback }) {
 	return (
 		<ul className="note-list">
 			{list.map((note) => (
@@ -15,10 +10,7 @@ export default function NoteList({ list, callback }) {
 					key={note.noteId}
 					tabIndex={0}
 					className={`note-list-item ${active == note.noteId ? "active" : ""}`}
-					onFocus={() => {
-						setActive(note.noteId);
-						callback(note);
-					}}>
+					onFocus={() => callback(note)}>
 					<strong>{note.title}</strong>
 				</li>
 			))}

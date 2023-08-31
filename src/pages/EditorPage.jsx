@@ -66,7 +66,7 @@ export default function EditorPage() {
 				className={["editor-page-controls", controls].join(" ")}
 				onClick={() => setControls("active")}>
 				{note && <>
-					<NoteList list={allNotes} callback={setNote} />
+					<NoteList list={allNotes} active={note.noteId} callback={setNote} />
 					<EditableNote note={note} callback={setNote} />
 					<NoteControls note={note} callback={setNote} />
 				</>}
