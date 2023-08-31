@@ -7,6 +7,10 @@
 	max-width: 100%;
 }
 
+body {
+	margin: 0;
+}
+
 #root {
 	position: absolute;
 	inset: 0;
@@ -22,10 +26,6 @@
 		background-color: $color;
 		color: high-contrast($white $black, $color);
 	}
-}
-
-body {
-	margin: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
