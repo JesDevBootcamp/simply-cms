@@ -4,7 +4,7 @@
 
 .editor-page {
 	display: block;
-	padding-bottom: 60px;
+	padding-bottom: 44px;
 	&-nav {
 		display: flex;
 		flex-flow: row wrap;
@@ -20,7 +20,7 @@
 		inset: auto size(-1) 0;
 		display: flex;
 		flex-flow: column nowrap;
-		max-width: $lg;
+		max-width: $md;
 		height: 66vh;
 		border-width: 1px 1px 0;
 		border-style: solid;
@@ -28,7 +28,7 @@
 		transition: transform 300ms ease-out;
 		overflow: hidden;
 		&:not(:hover, :focus-within, .active) {
-			transform: translateY(100%) translateY(-60px);
+			transform: translateY(100%) translateY(-44px);
 		}
 		@include container(editor-page-controls);
 		@include color-schemes using ($color) {
