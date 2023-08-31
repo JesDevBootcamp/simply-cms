@@ -18,9 +18,18 @@
 		color: inherit;
 		appearance: none;
 		outline: none;
+		&:not(:hover) {
+			transition: background-color 150ms linear;
+		}
 		@include color-schemes using ($color) {
 			border: 1px solid contrast-color($gray, $color, a11y(aa ui));
 			background-color: $color;
+			&:hover, &:focus {
+				background-color: color-shift($color, 5%);
+			}
+			&:active {
+				background-color: color-shift($color, 10%);
+			}
 			&:focus {
 				border-color: contrast-color($primary, $color, a11y(aa ui));
 				&:invalid {
