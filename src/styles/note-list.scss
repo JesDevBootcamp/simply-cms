@@ -3,7 +3,8 @@
 @use "members" as *;
 
 .note-list {
-	display: block;
+	display: flex;
+	flex-flow: column nowrap;
 	max-height: 45px;
 	line-height: 44px;
 	list-style: none;
@@ -13,6 +14,9 @@
 	overflow: auto;
 	&:hover, &:focus-within {
 		max-height: $sm;
+	}
+	&:not(:hover, :focus-within) &-item.active {
+		order: -1;
 	}
 	&-item {
 		display: block;
