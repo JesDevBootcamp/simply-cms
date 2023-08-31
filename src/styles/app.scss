@@ -2,7 +2,7 @@
 
 @use "members" as *;
 
-@import url('https://fonts.googleapis.com/css2?family=Bellota:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;700&family=Nanum+Brush+Script&family=Oxanium:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bellota:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Mono&family=Inter:wght@400;700&family=Nanum+Brush+Script&family=Oxanium:wght@400;800&display=swap');
 
 * {
 	/* Font Families: */
@@ -10,6 +10,7 @@
 	--display-font: 'Bellota', cursive;
 	--display-rendered-font: 'Oxanium', cursive;
 	--brand-font: 'Nanum Brush Script', cursive;
+	--monospace: 'IBM Plex Mono', monospace;
 
 	/* Absolute Size Values: */
 	@include font-size(-3, --xx-small);
@@ -92,4 +93,8 @@ a[href] {
 			color: contrast-color($primary, $color, $ratio);
 		}
 	}
+}
+
+code, pre, samp, kbd, var {
+	font-family: var(--monospace);
 }
