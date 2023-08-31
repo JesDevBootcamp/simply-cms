@@ -1,6 +1,51 @@
 // Editor Page: Styles for the page content editor.
 
-.editor-page-preview {
-	/* Isolates Outside Styles!: */
-	all: initial;
+@use "members" as *;
+
+.editor-page {
+	display: block;
+	padding-bottom: 60px;
+	&-nav {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: flex-end;
+		align-items: center;
+		@include viewport {
+			@include modular-scale(0, padding);
+		}
+	}
+	&-controls {
+		position: fixed;
+		z-index: 1;
+		inset: auto size(-1) 0;
+		display: flex;
+		flex-flow: row wrap;
+		max-width: $lg;
+		height: 66vh;
+		border-width: 1px 1px 0;
+		border-style: solid;
+		margin: 0 auto;
+		transition: transform 300ms ease-out;
+		overflow: hidden;
+		&:not(:hover, :focus-within, .active) {
+			transform: translateY(100%) translateY(-60px);
+		}
+		@include container(editor-page-controls);
+		@include color-schemes using ($color) {
+			border-color: contrast-color($gray, $color, a11y(aa ui));
+			background-color: $color;
+			box-shadow: 0 -8px 16px -12px color-shift($color, 25%);
+		}
+	}
+	&-content {
+		display: block;
+		box-sizing: content-box;
+		max-width: $xxl;
+		margin: 0 auto;
+		@include viewport {
+			@include modular-scale(2) using ($size) {
+				padding: 0 $size $size;
+			}
+		}
+	}
 }
