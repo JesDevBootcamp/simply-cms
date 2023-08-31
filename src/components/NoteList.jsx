@@ -4,11 +4,13 @@ import "../styles/note-list.scss";
 
 export default function NoteList({ list, callback }) {
 	return (
-		<ul className="note-list" tabIndex={0}>
+		<ul className="note-list">
 			{list.map((note) => (
 				<li className="note-list-item"
 					onClick={() => callback(note)}
-					key={note.noteId}>
+					onKeyUp={() => callback(note)}
+					key={note.noteId}
+					tabIndex={0}>
 					<strong>{note.title}</strong>
 				</li>
 			))}

@@ -11,7 +11,7 @@
 	margin: 0;
 	transition: max-height 300ms linear;
 	overflow: auto;
-	&:hover, &:focus {
+	&:hover, &:focus-within {
 		max-height: $sm;
 	}
 	&-item {
