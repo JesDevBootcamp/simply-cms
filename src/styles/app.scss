@@ -2,6 +2,30 @@
 
 @use "members" as *;
 
+@import url('https://fonts.googleapis.com/css2?family=Bellota:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;700&family=Nanum+Brush+Script&family=Oxanium:wght@400;800&display=swap');
+
+* {
+	/* Font Families: */
+	--sans-serif: 'Inter', sans-serif;
+	--display-font: 'Bellota', cursive;
+	--display-rendered-font: 'Oxanium', cursive;
+	--brand-font: 'Nanum Brush Script', cursive;
+
+	/* Absolute Size Values: */
+	@include font-size(-3, --xx-small);
+	@include font-size(-2, --x-small);
+	@include font-size(-1, --small);
+	@include font-size(0, --medium);
+	@include font-size(1, --large);
+	@include font-size(2, --x-large);
+	@include font-size(3, --xx-large);
+	@include font-size(4, --xxx-large);
+
+	/* Relative Size Values: */
+	#{--smaller}: size(-1);
+	#{--larger}: size(1);
+}
+
 *, ::before, ::after {
 	box-sizing: border-box;
 	max-width: 100%;
