@@ -1,0 +1,78 @@
+// Rendered Note: Markdown styles for rendered note information.
+
+@use "members" as *;
+
+.rendered-note {
+    display: block;
+	@include container(rendered-note);
+
+	:first-child {
+		margin-top: 0;
+	}
+
+	:last-child {
+		margin-bottom: 0;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: var(--display-rendered-font);
+	}
+
+	p {
+		margin: size(0) 0;
+	}
+
+    code {
+        hyphens: none;
+		tab-size: 4;
+    }
+
+    pre {
+		overflow-x: auto;
+    }
+
+    blockquote {
+        padding: size(0) size(1);
+		margin: 0;
+		@include color-schemes using ($color) {
+			border-left: 3px solid contrast-color($gray, $color, a11y(aa ui));
+		}
+    }
+
+    img {
+        border-radius: 3px;
+    }
+
+    hr {
+        width: 90%;
+        max-width: $lg;
+        margin: size(2) auto;
+    }
+
+    table {
+		display: block;
+        max-width: $xxl;
+        min-width: 0;
+		border-collapse: collapse;
+        overflow-x: auto;
+    }
+
+    thead {
+        border-bottom: 2px solid currentColor;
+    }
+
+    tr {
+		@include color-schemes using ($color) {
+			border-bottom: 1px solid contrast-color($gray, $color, a11y(aa ui));
+		}
+    }
+
+    th, td {
+        width: 1%;
+        min-width: 100px;
+        max-width: $sm;
+        vertical-align: top;
+        white-space: normal;
+        padding: size(-1) 4px;
+    }
+}
