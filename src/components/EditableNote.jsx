@@ -36,6 +36,7 @@ export default function EditableNote({ note, callback }) {
 	// Return sanitized note content:
 	return (
 		<textarea
+			autoFocus={true}
 			className="editable-note"
 			value={content}
 			onChange={(event) => {
