@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Heading from "../components/Heading";
 import TextField from "../components/TextField";
 import Button from "../components/Button";
+import Notification from "../components/Notification";
 
 import getLogout from "../functions/getLogout";
 import patchLogin from "../functions/patchLogin";
@@ -16,6 +17,9 @@ import useLogin from "../functions/useLogin";
 import "../styles/account-page.scss";
 
 export default function AccountPage() {
+	// Create state for deletion alert notification:
+	const [alert, setAlert] = useState(false);
+
 	// Create state for current login presence:
 	const [login, setLogin] = useLogin();
 
@@ -52,13 +56,17 @@ export default function AccountPage() {
 			// Logout user if signed-in:
 			await getLogout() && setLogin(false);
 		}
-		// Otherwise reset password state:
+		// Otherwise reset password state and alert user:
 		else {
 			setPassword("");
+			setAlert(true);
 		}
 	}
 
-	return login && (
+	return login && <>
+		<Notification
+			message="Account deletion failed, try email or password again."
+			show={alert} callback={setAlert} />
 		<main className="account-page">
 			<Link to="/editor">&#10094; Back to Editor</Link>
 			<Heading title="Simply Notes!" />
@@ -103,5 +111,5 @@ export default function AccountPage() {
 				<Button variant="danger">Delete Account</Button>
 			</form>
 		</main>
-	);
+	</>;
 }
