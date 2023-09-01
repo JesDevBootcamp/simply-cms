@@ -9,6 +9,7 @@
 	margin: 0 0 4px 4px;
 	font-weight: bold;
 	appearance: none;
+	overflow: hidden;
 	cursor: pointer;
 	&:not(:hover) {
 		transition: background-color 150ms linear;
