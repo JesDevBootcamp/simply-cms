@@ -9,12 +9,13 @@
 	gap: size(0) size(3);
 	margin: 0 auto;
 	& > * {
-		flex: 1 1 auto
+		flex: 0 1 auto;
 	}
 	.heading {
 		text-align: center;
 	}
 	form {
+		flex: 1 1 auto;
 		padding: size(0);
 		.button {
 			margin: size(0) 0 0;
