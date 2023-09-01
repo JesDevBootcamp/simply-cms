@@ -3,8 +3,10 @@
 @use "members" as *;
 
 .heading {
+	display: block;
+	width: 100%;
 	&-title, &-subtitle {
-		margin: 0;
+		margin-top: 0;
 	}
 	&-title {
 		font-family: var(--brand-font);
