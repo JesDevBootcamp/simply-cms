@@ -81,6 +81,14 @@ app.post("/api/login/", async (req, res) => {
 		where: { email }
 	});
 
+	// Only check against user in session if set:
+	if (req.session.user !== undefined && user !== null) {
+		if (req.session.user !== user.userId) {
+			res.send(false);
+			return;
+		}
+	}
+
 	// Set initial login verification to false:
 	let login = false;
 
