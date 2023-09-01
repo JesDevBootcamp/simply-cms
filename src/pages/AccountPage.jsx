@@ -98,7 +98,7 @@ export default function AccountPage() {
 						onChange={setPassword}
 					/>
 				</fieldset>
-				<Button>Delete Account</Button>
+				<Button variant="danger">Delete Account</Button>
 			</form>
 		</main>
 	);
