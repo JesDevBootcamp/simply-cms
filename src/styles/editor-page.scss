@@ -55,7 +55,7 @@
 	&-content {
 		display: block;
 		box-sizing: content-box;
-		max-width: $xxl;
+		max-width: $lg;
 		margin: 0 auto;
 		@include viewport {
 			@include modular-scale(2) using ($size) {
