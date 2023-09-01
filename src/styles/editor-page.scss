@@ -14,9 +14,20 @@
 			@include modular-scale(0, padding);
 		}
 	}
+	&-content {
+		display: block;
+		box-sizing: content-box;
+		max-width: $lg;
+		margin: 0 auto;
+		@include viewport {
+			@include modular-scale(2) using ($size) {
+				padding: 0 $size $size;
+			}
+		}
+	}
 	&-controls {
 		position: fixed;
-		z-index: 1;
+		z-index: 2;
 		inset: auto size(-1) 0;
 		display: flex;
 		flex-flow: column nowrap;
@@ -30,6 +41,12 @@
 		overflow: hidden;
 		&:not(:hover, :focus-within, .active) {
 			transform: translateY(100%) translateY(-44px);
+		}
+		&:hover, &:focus-within, &.active {
+			& + .editor-page-backdrop {
+				pointer-events: auto;
+				background-color: rgba($black, 0.2);
+			}
 		}
 		@include container(editor-page-controls);
 		@include color-schemes using ($color) {
@@ -53,15 +70,12 @@
 			}
 		}
 	}
-	&-content {
-		display: block;
-		box-sizing: content-box;
-		max-width: $lg;
-		margin: 0 auto;
-		@include viewport {
-			@include modular-scale(2) using ($size) {
-				padding: 0 $size $size;
-			}
-		}
+	&-backdrop {
+		position: fixed;
+		z-index: 1;
+		inset: 0;
+		pointer-events: none;
+		background-color: transparent;
+		transition: background-color 300ms linear;
 	}
 }

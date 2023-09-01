@@ -49,18 +49,16 @@ export default function EditorPage() {
 
 	return login && (
 		<main className="editor-page">
-			<div onClick={() => setControls("")}>
-				<div className="editor-page-nav">
-					<Link to="/account">
-						<Button variant="info">Manage Account</Button>
-					</Link>
-					<Button action={logoutHander} variant="warning">Logout</Button>
-				</div>
-				<div className="editor-page-content">
-					{note && <>
-						<RenderedNote content={note.content} />
-					</>}
-				</div>
+			<div className="editor-page-nav">
+				<Link to="/account">
+					<Button variant="info">Manage Account</Button>
+				</Link>
+				<Button action={logoutHander} variant="warning">Logout</Button>
+			</div>
+			<div className="editor-page-content">
+				{note && <>
+					<RenderedNote content={note.content} />
+				</>}
 			</div>
 			<div
 				className={["editor-page-controls", controls].join(" ")}
@@ -71,6 +69,10 @@ export default function EditorPage() {
 					<NoteControls note={note} callback={setNote} />
 				</>}
 			</div>
+			<div
+				className="editor-page-backdrop"
+				onClick={() => setControls("")}
+			/>
 		</main>
 	);
 }
