@@ -11,7 +11,7 @@ export default function Notification({ message }) {
 	return open && (
 		<article
 			className="notification"
-			onTransitionEnd={() => setOpen(false)}>
+			onAnimationEnd={() => setOpen(false)}>
 			<span
 				className="notification-message">
 				{message}

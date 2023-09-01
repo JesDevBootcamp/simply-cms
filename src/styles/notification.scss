@@ -1,0 +1,53 @@
+// Notification: Styles for user alert popover.
+
+@use "members" as *;
+
+.notification {
+	position: fixed;
+	z-index: 1;
+	inset: size(2) 0 auto auto;
+	display: block;
+	font-weight: bold;
+	border-width: 1px 0 1px 1px;
+	border-style: solid;
+	padding: size(0);
+	margin: 0 0 0 size(-1);
+	overflow: visible;
+	animation: notification 5s ease-in-out forwards;
+	@include color-schemes using ($color) {
+		background-color: color-shift($color, 5%);
+		border-color: contrast-color($gray, $color, a11y(aa ui));
+		box-shadow: 0 8px 16px -12px color-shift($color, 25%);
+	}
+	&-message {
+		@include container(notification-message);
+	}
+	&-close {
+		position: absolute;
+		top: -8px;
+		left: -8px;
+		display: block;
+		font-size: var(--large);
+		border: none;
+		background-color: $danger;
+		color: high-contrast($white $black, $danger);
+		border-radius: 9999px;
+		box-shadow: 0 0 6px 0 rgba($dark, 0.5);
+		cursor: pointer;
+		&:active {
+			transform: scale(0.8);
+		}
+	}
+}
+
+@keyframes notification {
+	0% {
+		transform: translateX(100%) translateX(8px);
+	}
+	20%, 80% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(100%) translateX(8px);
+	}
+}
