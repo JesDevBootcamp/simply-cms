@@ -1,6 +1,7 @@
 // Account Page: Page for editing or deleting account information.
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import Heading from "../components/Heading";
 import TextField from "../components/TextField";
@@ -59,6 +60,7 @@ export default function AccountPage() {
 
 	return login && (
 		<main className="account-page">
+			<Link to="/editor">&#10094; Back to Editor</Link>
 			<Heading title="Simply Notes!" />
 			<form className="account-page-update" onSubmit={updateHandler}>
 				<Heading subtitle="Update Account:" />
