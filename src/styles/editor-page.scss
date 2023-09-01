@@ -21,7 +21,8 @@
 		display: flex;
 		flex-flow: column nowrap;
 		max-width: $md;
-		height: 66vh;
+		height: 95vh;
+		max-height: $md;
 		border-width: 1px 1px 0;
 		border-style: solid;
 		margin: 0 auto;
