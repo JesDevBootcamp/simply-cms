@@ -7,11 +7,12 @@
 	z-index: 1;
 	inset: size(2) 0 auto auto;
 	display: block;
+	max-width: calc(100% - 24px);
 	font-weight: bold;
 	border-width: 1px 0 1px 1px;
 	border-style: solid;
 	padding: size(0);
-	margin: 0 0 0 size(-1);
+	margin: 0;
 	overflow: visible;
 	animation: notification 5s ease-in-out forwards;
 	@include color-schemes using ($color) {
