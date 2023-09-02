@@ -121,15 +121,22 @@ app.patch("/api/login/", async (req, res) => {
 			where: { userId: req.session.user }
 		});
 		
-		// Update user with new email and password:
-		user.email = email;
-		user.password = hash;
-
-		// Save user data:
-		await user.save();
-
-		// Respond with user data:
-		res.json(user);
+		// Try to update current user:
+		try {
+			// Update user with new email and password:
+			user.email = email;
+			user.password = hash;
+	
+			// Save user data:
+			await user.save();
+	
+			// Respond with user data:
+			res.json(user);
+		}
+		// Respond with falsy if error:
+		catch {
+			res.send(false);
+		}
 	}
 	else {
 		// Respond with falsy:

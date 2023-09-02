@@ -37,10 +37,15 @@ export default function AccountPage() {
 		event.preventDefault();
 
 		// Update login information:
-		await patchLogin(newEmail, newPassword);
-
-		// Logout user if signed-in:
-		await getLogout() && setLogin(false);
+		if(await patchLogin(newEmail, newPassword)) {
+			// Logout user if signed-in:
+			await getLogout() && setLogin(false);
+		}
+		// Otherwise reset new password state and alert user:
+		else {
+			setNewPassword("");
+			setAlert(true);
+		}
 	}
 
 	// Handler to delete login data:
@@ -65,7 +70,7 @@ export default function AccountPage() {
 
 	return login && <>
 		<Notification
-			message="Account deletion failed, try email or password again."
+			message="Account modification failed, try email or password again."
 			show={alert} callback={setAlert} />
 		<main className="account-page">
 			<Link to="/editor">&#10094; Back to Editor</Link>
